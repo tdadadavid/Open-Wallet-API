@@ -1,0 +1,25 @@
+{
+  "name": "openwallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "testWithCov": "jest --coverage",
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "author": "King David",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jest": "^28.1.0",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "nanoid": "^3.3.4",
+    "nodemon": "^2.0.16",
+    "supertest": "^6.2.3"
+  }
+}
