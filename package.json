@@ -6,7 +6,7 @@
   "scripts": {
     "testWithCov": "jest --coverage",
     "test": "jest",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "King David",
   "license": "ISC",

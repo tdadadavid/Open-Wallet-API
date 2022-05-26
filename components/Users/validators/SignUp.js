@@ -4,7 +4,7 @@ const userRegistrationSchema = require('../validationSchemas/SignUp');
 const validateNewUserInputs = async (req, res, next) => {
 
     try{
-        const { error: err } = await userRegistrationSchema.validate(req.body);
+        const { error: err , value } = await userRegistrationSchema.validate(req.body);
         if (err){
             console.log(err);
             res.status(400).json({
@@ -13,6 +13,8 @@ const validateNewUserInputs = async (req, res, next) => {
             });
             return;
         }
+
+        req.inputs = value;
 
         next();
     }catch (e) {

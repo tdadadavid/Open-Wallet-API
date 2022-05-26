@@ -11,6 +11,7 @@ CREATE DATABASE if not exists test_openWallet;
 
 
 # <!-- CREATE test_user_token -->
+# <!-- DELETE this table -->
 CREATE TABLE if not exists test_users_tokens (
     `user_id` INT NOT NULL UNIQUE,
     `refresh_token` VARCHAR(255) NOT NULL UNIQUE,
@@ -18,3 +19,14 @@ CREATE TABLE if not exists test_users_tokens (
 );
 
 
+# <!-- Alter test_users table -->
+ALTER TABLE test_users ADD COLUMN `token` VARCHAR(255) NOT NULL UNIQUE;
+
+# <!-- Alter test_users table -->
+ALTER TABLE test_users ADD COLUMN `password` VARCHAR(120) NOT NULL;
+
+# <!-- Alter test_users table -->
+ALTER TABLE test_users MODIFY COLUMN `id` VARCHAR(30) NOT NULL UNIQUE;
+
+# <!-- Drop the test_users_tokens table -->
+DROP TABLE test_users_tokens;
