@@ -7,7 +7,6 @@ async function ensureUniqueEmail(req, res, next) {
     try{
         const user = await User.findByEmail(email);
         if (user){
-            console.log(user);
             errorMessage(res, 422, "Email is already taken");
             return
         }

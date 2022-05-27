@@ -1,0 +1,31 @@
+// Sign in process
+*User gives
+    - password
+    - email
+    - names
+
+* Hash the password
+* Save the user to the database
+* Generate token for the user
+* Send the user access token
+
+
+
+
+// Login process
+* User gives
+    - email
+    - password.
+
+* Authenticate the user by
+    - checking if the email exist.
+    - compare given password with hash password
+    - get the user id
+
+* Generate token for the user
+* token should contain
+    - id
+
+* Save the user's refresh token to the db
+* Send the user's access token with the json response
+

@@ -1,25 +1,10 @@
 const request = require('supertest');
 const app = require('../app');
-const { generateAccessToken, generateRefreshToken} = require('../utils/tokens');
-const { connectToDatabase, truncateTable, closeConnection } = require('../database');
+const setup = require('./setup')
 
+describe("New User routes", () => {
 
-describe("User routes", () => {
-
-    beforeAll(() => {
-        jest.setTimeout(1000000000000000000000);
-        connectToDatabase();
-    });
-
-    beforeEach(() => {
-        jest.setTimeout(1000000000000000000000);
-        truncateTable("test_users");
-    });
-
-    afterAll(() => {
-        jest.setTimeout(1000000000000000000000);
-        closeConnection();
-    })
+    setup();
 
     const url = '/api/auth/users';
     const validUserInputs = {
@@ -34,7 +19,7 @@ describe("User routes", () => {
 
     describe('POST api/auth/users', () => {
 
-        it('should register a new user.', async function () {
+        it('should register a new user.', async () => {
             const response = await request(app)
                 .post(url)
                 .send(validUserInputs);
@@ -42,7 +27,7 @@ describe("User routes", () => {
             expect(response.status).toBe(201);
         });
 
-        it('should throw error message "email is required" if email is not given.', async function () {
+        it('should throw error message "email is required" if email is not given.', async () => {
             const response = await request(app)
                 .post(url)
                 .send({
@@ -55,7 +40,7 @@ describe("User routes", () => {
             expect(response.body.message).toBe('"email" is required');
         });
 
-        it('should throw error if the confirm_password is not the same as the password', async function () {
+        it('should throw error if the confirm_password is not the same as the password', async () => {
             await request(app)
                 .post(url)
                 .send({
@@ -93,18 +78,6 @@ describe("User routes", () => {
 
             expect(response.status).toBe(422);
             expect(response.body.message).toEqual("Email is already taken");
-        });
-
-
-        //TODO Test for token being generated (in another file)
-        describe('Test token functions', () => {
-            it('should generate unique access token', function () {
-                expect(generateAccessToken(1)).not.toBeUndefined();
-            });
-
-            it('should generate unique refresh token', function () {
-                expect(generateRefreshToken(1)).not.toBeUndefined();
-            });
         });
 
 

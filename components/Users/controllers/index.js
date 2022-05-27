@@ -4,7 +4,7 @@ const { hashUserPassword, successMessage, errorResponse, errorMessage, successRe
 
 const UserController = {
 
-    async registerUser(req, res){
+    async signUp(req, res){
 
         const inputs = req.inputs;
 
@@ -20,8 +20,8 @@ const UserController = {
         //assign refresh token to user
         newUser.token = await generateRefreshToken(newUser.id);
 
-        //assign the access token to the headers
-        res.header('auth-token', token);
+        //assign the access token to the header
+        res.header('x-auth-token', token);
 
         try{
             const user = await User.save(newUser);

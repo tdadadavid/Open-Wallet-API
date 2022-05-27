@@ -31,7 +31,6 @@ class User {
         });
     }
 
-
     static save(user){
 
         const statement = `INSERT INTO test_openwallet.test_users (id, firstname, lastname, email, token, password) 
@@ -40,7 +39,7 @@ class User {
         const values = [user.id, user.firstname, user.lastname, user.email, user.token, user.password];
 
         return new Promise((resolve, reject) => {
-            db.query(statement, values, async (err, results) => {
+            db.query(statement, values, async (err) => {
                 if (err) {
                     reject(err);
                 } else {

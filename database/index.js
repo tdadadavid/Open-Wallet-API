@@ -11,18 +11,15 @@ const db = mysql.createConnection({
 
 
 const connectToDatabase = async () => {
-    try {
-        await db.connect((err) => {
-            if (err){
-                console.log("Unable to establish database connection");
-                console.log(err);
-            }else{
-                console.log("Database connection established");
-            }
+    try{
+        await db.connect();
+        console.log("Database connection established")
+    }catch (err) {
+        console.error({
+            err,
+            message: "Unable to establish database connection"
         });
-    }catch (e) {
-        console.log(e);
-        console.log("Oops! an error occurred.")
+        process.exit(1);
     }
 }
 
@@ -40,8 +37,6 @@ function truncateTable(tableName){
     })
 }
 
-
-
 function closeConnection(){
     return new Promise((resolve, reject) => {
         db.end(err => {
@@ -56,9 +51,6 @@ function closeConnection(){
     })
 
 }
-
-
-
 
 module.exports = {
     connectToDatabase,
