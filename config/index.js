@@ -31,7 +31,9 @@ const config = {
         production: process.env.NODE_ENV,
         testing: process.env.NODE_ENV,
         development: process.env.NODE_ENV
-    }
+    },
+
+    exchangeRatesAPIKey: process.env.EXCHANGE_RATES_API_KEY
 }
 
 

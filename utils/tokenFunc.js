@@ -4,7 +4,7 @@ const config = require('../config')
 
 function generateAccessToken(userID) {
     if (!userID) return new Error("User id not defined");
-    sign({ id: userID }, config.jwtSecrets.ACCESS_TOKEN_SECRET, {
+    return sign({ id: userID }, config.jwtSecrets.ACCESS_TOKEN_SECRET, {
         expiresIn: '2016h'
     });
 }

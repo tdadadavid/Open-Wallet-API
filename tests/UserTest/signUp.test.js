@@ -56,6 +56,8 @@ describe("New User routes", () => {
         //TODO Test for duplicates email
         it('should throw error when a users gives an email that has already been taken ', async () => {
 
+            jest.setTimeout(1000000000000000000000);
+
             await request(app)
                 .post(url)
                 .send({
@@ -83,6 +85,7 @@ describe("New User routes", () => {
 
         //TODO Test for user being return after registration
         it('should return the new user details in json',  async () => {
+            jest.setTimeout(1000000000000000000);
             const response = await request(app)
                 .post(url).send(validUserInputs);
 
@@ -93,23 +96,23 @@ describe("New User routes", () => {
 
         //TODO  Test for token saved in the headers
         it('should return true if the header has auth-token', async () => {
+            jest.setTimeout(100000000000000000);
             const response = await request(app)
                 .post(url).send(validUserInputs);
 
-            expect(response.header['auth-token']).toBeDefined();
-
+            expect(response.header['x-auth-token']).toBeDefined();
         });
 
 
-        //TODO Test for error while registering user
+        // Test for error while registering user
         // it will only pass when the database fails
-        it('should throw 500 status && Oops! an error occurred', async () => {
-            const response = await request(app)
-                .post(url).send(validUserInputs);
-
-            expect(response.status).toBe(500);
-            expect(response.body.message).toBe("Oops! an error occurred");
-        });
+        // it('should throw 500 status && Oops! an error occurred', async () => {
+        //     const response = await request(app)
+        //         .post(url).send(validUserInputs);
+        //
+        //     expect(response.status).toBe(500);
+        //     expect(response.body.message).toBe("Oops! an error occurred");
+        // });
 
     });
 

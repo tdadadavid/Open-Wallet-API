@@ -24,7 +24,7 @@ const connectToDatabase = async () => {
 }
 
 function truncateTable(tableName){
-    const statement = `TRUNCATE TABLE ${tableName}`;
+    const statement = `TRUNCATE TABLE test_openwallet.${tableName}`;
     return new Promise((resolve, reject) => {
         db.query(statement, (err, results) => {
             if (err){
@@ -45,7 +45,7 @@ function closeConnection(){
                 console.log("Oops! an error occurred");
                 reject(err)
             }else{
-                console.log("connection closed");
+                // console.log("connection closed");
             }
         });
     })

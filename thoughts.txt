@@ -29,3 +29,45 @@
 * Save the user's refresh token to the db
 * Send the user's access token with the json response
 
+
+
+* Wallet schema
+    -id (string)(hl) , (varchar(16))(ll)
+    -currency (string)(hl), (varchar(4))(ll)
+    -amount (number)(hl), (Decimal, precision 4 decimal places, both on db and javascript level)
+    -user_id (number)(hl), (foreign key referencing users table)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

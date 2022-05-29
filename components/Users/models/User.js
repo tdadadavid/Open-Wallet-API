@@ -27,7 +27,7 @@ class User {
             const newUser = new User(element.firstname, element.lastname, element.email, element.password);
             newUser.token = element.token;
             newUser.id = element.id;
-            return newUser.toJSON();
+            return newUser;
         });
     }
 
@@ -55,13 +55,15 @@ class User {
         const statement = `SELECT * FROM test_openwallet.test_users WHERE email = ?`;
 
         return new Promise((resolve, reject) => {
-            db.query(statement,userEmail , (err, results) => {
+            db.query(statement, userEmail , (err, results) => {
                 if (err) {
                     reject(err);
                 } else if (results.length === 0){
+                    console.log(results);
                     resolve(null);
                 }else {
-                    resolve(results);
+                    const user = this.transform(results);
+                    resolve(user);
                 }
             });
         });

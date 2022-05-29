@@ -1,6 +1,7 @@
 const User = require('../models/User');
-const { generateAccessToken, generateRefreshToken } = require('../../../utils/tokens');
-const { hashUserPassword, successMessage, errorResponse, errorMessage, successResponse} = require('../../../utils/helpers');
+const { generateAccessToken, generateRefreshToken } = require('../../../utils/tokenFunc');
+const { hashUserPassword, successMessage, errorResponse, errorMessage, successResponse} = require('../../../utils/apiResponses');
+const {compare} = require("bcrypt");
 
 const UserController = {
 
@@ -15,22 +16,40 @@ const UserController = {
         const newUser = new User(inputs.firstname, inputs.lastname, inputs.email, password);
 
         //generate user token
-        const token = await generateAccessToken(newUser.id);
+        const access_token = await generateAccessToken(newUser.id);
 
         //assign refresh token to user
         newUser.token = await generateRefreshToken(newUser.id);
 
         //assign the access token to the header
-        res.header('x-auth-token', token);
+        res.header('x-auth-token', access_token);
 
         try{
             const user = await User.save(newUser);
-            successResponse(res, 201, "New user registered", user[0]);
+            successResponse(res, 201, "New user registered", user[0].toJSON());
         }catch (e) {
             console.log(e);
             errorMessage(res, 500, "Oops! an error occurred");
         }
-    }
+    },
+
+    async login(req, res) {
+
+        const payload = req.userInputs;
+
+        // check if this is a registered user
+        const user = await User.findByEmail(payload.email);
+        if(!user) return errorMessage(res, 404, "Email not found");
+
+        // check if the passwords are correct
+        const successful = await compare(payload.password, user[0].password);
+        if(!successful) return errorMessage(res, 400, "Password doesn't match");
+
+        // log the user in
+        successResponse(res, 200, "User logged in", user[0]);
+    },
+
+
 }
 
 module.exports = UserController

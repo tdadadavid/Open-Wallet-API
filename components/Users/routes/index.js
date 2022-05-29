@@ -1,19 +1,15 @@
 const { Router } = require('express');
 const userController = require('../controllers');
-const ensureUniqueEmail = require('../../../middleware/auth')
-const validateNewUserInputs = require('../validators/SignUp');
+const ensureUniqueEmail = require('../../../middleware/ensureUniqueEmail');
+const verifyToken = require('../../../middleware/auth')
+const validateNewUserInputs = require('../validators/SignUpValidator');
+const validateInputs = require('../validators/loginValidator')
 
 
 const userRouter = Router();
 
-userRouter
-    .route('/api/auth/users')
-    .post(validateNewUserInputs, ensureUniqueEmail, userController.signUp);
+userRouter.post('/api/auth/users', validateNewUserInputs, ensureUniqueEmail, userController.signUp);
+userRouter.post('/api/auth/users/login',verifyToken, validateInputs, userController.login)
 
-
-//TODO
-userRouter
-    .route('/api/auth/users/login')
-    .post(validateInputs, auth, userController.login)
 
 module.exports = userRouter;

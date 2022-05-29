@@ -1,4 +1,4 @@
-const {generateAccessToken, generateRefreshToken} = require("../utils/tokens");
+const {generateAccessToken, generateRefreshToken} = require("../utils/tokenFunc");
 
 describe('Test token functions', () => {
     it('should generate unique access token', function () {

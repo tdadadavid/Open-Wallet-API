@@ -1,4 +1,4 @@
-const userRegistrationSchema = require('../validationSchemas/SignUp');
+const userRegistrationSchema = require('../validationSchemas/SignUpSchema');
 
 
 const validateNewUserInputs = async (req, res, next) => {
