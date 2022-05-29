@@ -2,7 +2,7 @@ const { verify } = require('jsonwebtoken');
 const {errorMessage} = require("../utils/apiResponses");
 const config = require('../config');
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
     const token = req.header('x-auth-token');
     if(!token){
         errorMessage(res, 401, "Access denied");
@@ -10,7 +10,7 @@ const verifyToken = (req, res, next) => {
     }
 
     try{
-        req.userID = verify(token, config.jwtSecrets.ACCESS_TOKEN_SECRET);
+        req.user = await verify(token, config.jwtSecrets.ACCESS_TOKEN_SECRET);
         next()
     }catch(err){
         errorMessage(res, 400, "Invalid token provided");

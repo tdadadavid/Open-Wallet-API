@@ -33,3 +33,16 @@ ALTER TABLE test_users MODIFY COLUMN `token` VARCHAR(255) UNIQUE;
 
 # <!-- Drop the test_users_tokens table -->
 DROP TABLE test_users_tokens;
+
+# <!-- Create the wallet table -->
+CREATE TABLE if not exists test_openWallet.test_wallets (
+    `id` VARCHAR(16) NOT NULL UNIQUE PRIMARY KEY,
+    `currency` VARCHAR(3) NOT NULL ,
+    `amount` DECIMAL(9, 4) NOT NULL,
+    `user_id` VARCHAR(30) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES test_users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+# <!-- Alter test_wallets -->
+ALTER TABLE test_openWallet.test_wallets MODIFY COLUMN `currency` VARCHAR(6) NOT NULL;

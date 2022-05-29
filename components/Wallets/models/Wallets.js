@@ -3,11 +3,63 @@ const nanoid = require('nanoid');
 
 class Wallets {
 
-    constructor(currency, amount) {
+    constructor(currency, user) {
         this.id = nanoid.nanoid(16);
         this.currency = currency;
-        this.amount = amount;
-        this.user_id = undefined;
+        this.amount = 0.0000;
+        this.user_id = user;
+    }
+
+
+    toJSON(){
+        return {
+            id: this.id,
+            currency: this.currency,
+            amount: this.amount
+        }
+    }
+
+    static transform(array){
+        return array.map(result => {
+            const newWallet = new Wallets(result.currency, result.user_id);
+            newWallet.amount = result.amount;
+            newWallet.id = result.id;
+            return newWallet;
+        });
+    }
+
+    static save(wallet){
+        const statement = `INSERT INTO test_openwallet.test_wallets (id, currency, amount, user_id)
+                            VALUES (?, ?, ?, ?)`;
+        const values = [wallet.id, wallet.currency, wallet.amount, wallet.user_id];
+
+        return new Promise((resolve,reject) => {
+            db.query(statement, values, (err) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const result = this.findByID(wallet.id);
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    static findByID(id){
+        const statement = "SELECT * FROM test_openwallet.test_wallets WHERE id = ?";
+
+        return new Promise((resolve, reject) => {
+            db.query(statement, id, (err, results) => {
+                if (err){
+                    reject(err);
+                }else if (results.length === 0){
+                    resolve(null);
+                }else{
+                    const wallet = this.transform(results);
+                    resolve(wallet);
+                }
+            })
+        })
     }
 
 }

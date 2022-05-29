@@ -1,9 +1,9 @@
 const request = require('supertest');
-const app = require('../app')
-const {generateAccessToken} = require("../utils/tokenFunc");
-const User = require("../components/Users/models/User");
-const {connectToDatabase, closeConnection, truncateTable} = require("../database");
-const makeUser = require("../utils/factoryFunc");
+const app = require('../../app')
+const {generateAccessToken} = require("../../utils/tokenFunc");
+const User = require("../../components/Users/models/User");
+const {connectToDatabase, closeConnection, truncateTable} = require("../../database");
+const makeUser = require("../../utils/factoryFunc");
 
 describe("Test login", () => {
 

@@ -1,19 +1,20 @@
 const request = require('supertest');
-const app = require("../app");
-const { generateAccessToken } = require("../utils/tokenFunc");
-const User = require("../components/Users/models/User");
+const app = require("../../app");
+const { generateAccessToken } = require("../../utils/tokenFunc");
+const User = require("../../components/Users/models/User");
 
 
 describe('Testing verifyToken module', () => {
 
 
-    let token;
+    const id = new User().id
+    let token = generateAccessToken(id);
 
     const executeRequest =  () => {
         return  request(app)
             .post('/api/auth/users/login')
             .set('x-auth-token', token)
-            .send({ email: "email@gmail.com", password: "mypass11122"});
+            .send({ email: "newemail@gmail.com", password: "myPassword1"});
     }
 
     it('should return 401 if the request header has no token', async () => {
@@ -28,10 +29,16 @@ describe('Testing verifyToken module', () => {
         token =  generateAccessToken(new User().id);
         token += "tampered";
 
-
         const response = await executeRequest();
         expect(response.status).toBe(400);
         expect(response.body.message).toEqual("Invalid token provided");
+    });
+
+    // copied the id from the test database to verify
+    it('should get the user id from the token', async () =>  {
+        const response = await executeRequest();
+        expect(response.status).toBe(200);
+        expect(response.body.data.id).toEqual("PhGiyOwyghZX")
     });
 
 

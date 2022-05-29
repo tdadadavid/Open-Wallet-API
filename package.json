@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "testWithCov": "jest --coverage",
-    "test": "jest",
+    "test": "jest --verbose",
     "start": "nodemon server.js"
   },
   "author": "King David",
