@@ -1,8 +1,6 @@
 const request = require('supertest');
 const app = require('../../app');
 const {generateAccessToken} = require("../../utils/tokenFunc");
-const User = require("../../components/Users/models/User");
-
 
 describe('Wallet schema test', () => {
 
@@ -31,6 +29,7 @@ describe('Wallet schema test', () => {
         expect(response.body.message).toBe("Invalid currency input");
     });
 
+    // this has an indirect relationship with auth
     it('should throw error if no token is provided', async () => {
         token = '';
 
@@ -39,11 +38,7 @@ describe('Wallet schema test', () => {
         expect(response.body.message).toBe("Access denied");
     });
 
-    it('should return 200 on saving the wallet to the db', async () => {
-        const response = await makeRequest();
-        expect(response.status).toBe(201);
-        expect(response.body.message).toBe("Wallet created successfully");
-    });
+
 
 
 

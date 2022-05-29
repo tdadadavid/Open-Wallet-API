@@ -10,10 +10,27 @@ const WalletController = {
 
         const wallet = new Wallet(currency, user_id);
 
-        const userWallet = await Wallet.save(wallet);
-        if (!userWallet) return errorMessage(res, 500, "Oops! an error occurred");
+        try{
+            const userWallet = await Wallet.save(wallet);
+            successResponse(res, 201, "Wallet created successfully", userWallet[0].toJSON());
+        }catch (e) {
+            console.log(e);
+            errorMessage(res, 500, "Oops! an error occurred");
+        }
 
-        return successResponse(res, 201, "Wallet created successfully", userWallet[0].toJSON());
+    },
+
+    getUserWallets: async (req, res) => {
+        const owner = req.user.id;
+
+        try{
+            const user = await Wallet.findByOwner(owner);
+            console.log(user);
+            successResponse(res, 200, "Here you go.", user[0].toJSON());
+        }catch (e) {
+            console.log(e);
+            errorMessage(res, 500, "Oops! an error occurred");
+        }
     }
 }
 

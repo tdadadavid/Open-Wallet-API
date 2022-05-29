@@ -9,10 +9,11 @@ const walletRouter = Router();
 walletRouter.use(verifyToken);
 
 walletRouter
-    .post('/api/wallets', validateInputs, walletController.createWallet);
-//     .get(walletRouter.getUserWallets)
-//
-//
+    .route('/api/wallets')
+    .post(validateInputs, walletController.createWallet)
+    .get(walletController.getUserWallets)
+
+
 // walletRouter
 //     .route('/:id')
 //     .get(walletController.getWallet)

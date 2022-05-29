@@ -45,6 +45,23 @@ class Wallets {
         });
     }
 
+    static findByOwner(owner){
+        const statement = "SELECT * FROM test_openwallet.test_wallets WHERE user_id = ?";
+
+        return new Promise((resolve, reject) => {
+            db.query(statement, owner, (err, results) => {
+                if (err){
+                    reject(err);
+                }else if (results.length === 0){
+                    resolve(null);
+                }else{
+                    const wallet = this.transform(results);
+                    resolve(wallet);
+                }
+            });
+        });
+    }
+
     static findByID(id){
         const statement = "SELECT * FROM test_openwallet.test_wallets WHERE id = ?";
 
