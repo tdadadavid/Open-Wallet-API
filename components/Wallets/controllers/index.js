@@ -24,9 +24,22 @@ const WalletController = {
         const owner = req.user.id;
 
         try{
-            const user = await Wallet.findByOwner(owner);
-            console.log(user);
-            successResponse(res, 200, "Here you go.", user[0].toJSON());
+            const wallets = await Wallet.findByOwner(owner);
+            if (!wallets) return errorMessage(res, 404, "Omooo! you don't have any wallet");
+            return successResponse(res, 200, "Here you go.", wallets[0].toJSON());
+        }catch (e) {
+            console.log(e);
+            errorMessage(res, 500, "Oops! an error occurred");
+        }
+    },
+
+    getWallet: async (req, res) => {
+        const { id }= req.params;
+
+        try{
+            const wallet = await Wallet.findByID(id);
+            if (!wallet) return errorMessage(res, 404, `Omooo! wallet with id ${id} was not found`);
+            successResponse(res, 200, "Here you go.", wallet);
         }catch (e) {
             console.log(e);
             errorMessage(res, 500, "Oops! an error occurred");

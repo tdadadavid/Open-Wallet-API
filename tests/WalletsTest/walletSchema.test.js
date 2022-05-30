@@ -39,7 +39,4 @@ describe('Wallet schema test', () => {
     });
 
 
-
-
-
 });

@@ -10,7 +10,6 @@ class Wallets {
         this.user_id = user;
     }
 
-
     toJSON(){
         return {
             id: this.id,

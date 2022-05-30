@@ -45,7 +45,14 @@
 
 * Save the wallet to the db, using the user_id;
 
+//TODO
+--> get a wallet
+--> delete a wallet
 
+//TODO
+--> make deposits
+--> retrieve all deposits
+--> get deposits details
 
 
 

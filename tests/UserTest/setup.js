@@ -1,4 +1,4 @@
-const {connectToDatabase, truncateTable, closeConnection} = require("../database");
+const {connectToDatabase, truncateTable, closeConnection} = require("../../database");
 
 
 function setup() {

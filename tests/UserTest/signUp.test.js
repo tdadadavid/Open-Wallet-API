@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../app');
+const app = require('../../app');
 const setup = require('./setup')
 
 describe("New User routes", () => {
@@ -10,7 +10,7 @@ describe("New User routes", () => {
     const validUserInputs = {
         firstname: "King",
         lastname: "David",
-        email: "newEmail@gmail.com",
+        email: "another@gmail.com",
         password: "myPassword1",
         confirm_password: "myPassword1"
     };

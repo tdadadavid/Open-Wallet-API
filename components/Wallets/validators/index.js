@@ -12,7 +12,6 @@ const validateInputs = async (req, res, next) => {
         return errorMessage(res, 400, "Invalid currency input");
     }
 
-    console.log(value);
     req.currency = value;
     next();
 

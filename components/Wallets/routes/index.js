@@ -14,17 +14,20 @@ walletRouter
     .get(walletController.getUserWallets)
 
 
+//TODO
+walletRouter
+    .route('/api/wallets/:id')
+    .get(walletController.getWallet)
+    // .delete(validateInputs, walletController.closeWallet);
+
+//TODO
 // walletRouter
-//     .route('/:id')
-//     .get(walletController.getWallet)
-//     .delete(validateInputs, walletController.closeWallet);
-//
-// walletRouter
-//     .route('/:id/deposits')
+//     .route('/api/wallets/:id/deposits')
 //     .post(depositSchema, walletController.makeDeposit)
 //     .get(walletRouter.getDeposits)
-//
-// walletRouter.get('/:id/deposit/:id', walletRouter.getDepositsHistory);
+
+//TODO
+// walletRouter.get('/api/wallets/:id/deposit/:id', walletRouter.getDepositsHistory);
 
 
 module.exports = walletRouter;
