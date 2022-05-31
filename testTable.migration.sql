@@ -52,14 +52,38 @@ ALTER TABLE test_openWallet.test_wallets MODIFY COLUMN `currency` VARCHAR(6) NOT
 CREATE TABLE if not exists test_openWallet.test_deposits (
     `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY ,
     `amount` DECIMAL(9,4) NOT NULL,
-    `wallet_id` VARCHAR(16) NOT NULL,
-    FOREIGN KEY (wallet_id) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
+    `source_wallet` VARCHAR(16) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (source_wallet) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+# <!-- Create deposits table --> (don't use).
+CREATE TABLE if not exists test_openWallet.test_withdrawals (
+     `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY ,
+     `amount` DECIMAL(9,4) NOT NULL,
+     `source_wallet` VARCHAR(16) NOT NULL,
+     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     FOREIGN KEY (source_wallet) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+# <!-- Create deposits table --> (don't use).
+CREATE TABLE if not exists test_openWallet.test_transfers (
+     `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY ,
+     `amount` DECIMAL(9,4) NOT NULL,
+     `source_wallet` VARCHAR(16) NOT NULL,
+     `destination_wallet` VARCHAR(16) NOT NULL,
+     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     FOREIGN KEY (source_wallet) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+# <!-- Don't copy -->
 DROP TABLE test_openWallet.test_deposits;
 
+# <!-- Don't copy -->
+DROP TABLE test_wallets;
 
-# <!-- Create Transactions table -->
+# <!-- Create Transactions table don't copy -->
 CREATE TABLE if not exists test_openWallet.test_transactions (
     `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY,
     `type` VARCHAR(12) NOT NULL,
@@ -71,6 +95,9 @@ CREATE TABLE if not exists test_openWallet.test_transactions (
     FOREIGN KEY (source_wallet) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+# <!-- Drop transactions table -->
+DROP TABLE test_openWallet.test_transactions;
+
 # I am only keeping track if the wallet affected
 #    -> Transfer-from source_wallet
 #    -> Deposit-into source_wallet
@@ -81,6 +108,18 @@ CREATE TABLE if not exists test_openWallet.test_transactions (
 # <!-- Triggers  -->
 
 # <!-- Create trigger for deposits -->
+DELIMITER $$
+
+CREATE TRIGGER deposit_after_insert
+    AFTER INSERT ON test_openwallet.test_deposits
+    FOR EACH ROW
+
+BEGIN
+
+end $$
+
+
+DELIMITER ;
 
 
 # <!-- Create triggers for withdrawal -->

@@ -11,9 +11,9 @@ class Transactions {
     }
 
     static deposit(details){
-        const statement =  `INSERT INTO test_openwallet.test_transactions (id, type, amount, source_wallet) 
-                            VALUES (?, ?, ?, ?)`;
-        const values = [details.id, details.type, details.amount, details.wallet];
+        const statement =  `INSERT INTO test_openwallet.test_deposits (id, amount, source_wallet) 
+                            VALUES (?, ?, ?)`;
+        const values = [details.id, details.amount, details.wallet];
 
         return new Promise((resolve, reject) => {
             db.query(statement, values, (err, result) => {
@@ -24,7 +24,7 @@ class Transactions {
                     resolve(true);
                 }
             });
-        });;
+        });
     }
 }
 
