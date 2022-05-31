@@ -11,6 +11,7 @@ class Transactions {
     }
 
     static deposit(details){
+
         const statement =  `INSERT INTO test_openwallet.test_deposits (id, amount, source_wallet) 
                             VALUES (?, ?, ?)`;
         const values = [details.id, details.amount, details.wallet];

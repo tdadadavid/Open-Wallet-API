@@ -62,7 +62,6 @@ class Wallets {
     }
 
     static findByID(id){
-        console.log(id);
         const statement = `SELECT * FROM test_openwallet.test_wallets WHERE id = ?`;
 
         return new Promise((resolve, reject) => {

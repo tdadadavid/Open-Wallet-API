@@ -43,6 +43,8 @@ CREATE TABLE if not exists test_openWallet.test_wallets (
     FOREIGN KEY (user_id) REFERENCES test_users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+ALTER TABLE test_openWallet.test_wallets MODIFY COLUMN `amount` DECIMAL(13,4) NOT NULL;
+
 
 # <!-- Alter test_wallets -->
 ALTER TABLE test_openWallet.test_wallets MODIFY COLUMN `currency` VARCHAR(6) NOT NULL;
@@ -57,7 +59,11 @@ CREATE TABLE if not exists test_openWallet.test_deposits (
     FOREIGN KEY (source_wallet) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-# <!-- Create deposits table --> (don't use).
+
+# <!-- Update the amount that can be deposited -->
+ALTER TABLE test_openWallet.test_deposits MODIFY COLUMN `amount` DECIMAL(13,4) NOT NULL;
+
+# <!-- Create withdrawals table --> (don't use).
 CREATE TABLE if not exists test_openWallet.test_withdrawals (
      `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY ,
      `amount` DECIMAL(9,4) NOT NULL,
@@ -66,8 +72,10 @@ CREATE TABLE if not exists test_openWallet.test_withdrawals (
      FOREIGN KEY (source_wallet) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+ALTER TABLE test_openWallet.test_withdrawals MODIFY COLUMN `amount` DECIMAL(13,4) NOT NULL;
 
-# <!-- Create deposits table --> (don't use).
+
+# <!-- Create transfers table --> (don't use).
 CREATE TABLE if not exists test_openWallet.test_transfers (
      `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY ,
      `amount` DECIMAL(9,4) NOT NULL,
@@ -76,6 +84,8 @@ CREATE TABLE if not exists test_openWallet.test_transfers (
      `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
      FOREIGN KEY (source_wallet) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+ALTER TABLE test_openWallet.test_transfers MODIFY COLUMN `amount` DECIMAL(13,4) NOT NULL;
 
 # <!-- Don't copy -->
 DROP TABLE test_openWallet.test_deposits;
@@ -108,18 +118,14 @@ DROP TABLE test_openWallet.test_transactions;
 # <!-- Triggers  -->
 
 # <!-- Create trigger for deposits -->
-DELIMITER $$
-
-CREATE TRIGGER deposit_after_insert
-    AFTER INSERT ON test_openwallet.test_deposits
+CREATE TRIGGER deposits_after_insert
+    AFTER INSERT ON test_openWallet.test_deposits
     FOR EACH ROW
-
 BEGIN
-
-end $$
-
-
-DELIMITER ;
+    UPDATE test_openWallet.test_wallets
+    SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount + NEW.amount
+    WHERE test_openWallet.test_wallets.id = NEW.source_wallet;
+end
 
 
 # <!-- Create triggers for withdrawal -->

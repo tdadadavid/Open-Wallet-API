@@ -11,7 +11,7 @@ const TransactionController = {
 
         console.log(wallet);
 
-        const transaction = new Transaction(amount, wallet.id);
+        const transaction = new Transaction(+amount, wallet.id);
 
         // update the value of the wallet here in javascript while the triggers
         // in sql will update it at database level, because of fast performance
