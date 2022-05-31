@@ -28,6 +28,12 @@ describe('Wallets Test.', () => {
             .set('x-auth-token', token);
     }
 
+    const makeDeleteRequest = (url) => {
+        return request(app)
+            .delete(url)
+            .set('x-auth-token', token);
+    }
+
     it('should return 200 on saving the wallet to the db', async () => {
         const response = await makePostRequest();
         expect(response.status).toBe(201);
@@ -35,7 +41,7 @@ describe('Wallets Test.', () => {
     });
 
 
-    it('should return all wallets ', async () => {
+    it('should return all wallets', async () => {
         const response = await makeGetRequest('/api/wallets');
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Here you go.");
@@ -52,7 +58,8 @@ describe('Wallets Test.', () => {
     });
 
     it('should return a wallet for a user', async () => {
-        const response = await makeGetRequest('/api/wallets/2OcYTeWh7IfDnZNL');
+        const EXISTING_WALLET_ID = 'R6UsuuY_Rci_fLw-';
+        const response = await makeGetRequest(`/api/wallets/${EXISTING_WALLET_ID}`);
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Here you go.");
     });
@@ -63,4 +70,20 @@ describe('Wallets Test.', () => {
         expect(response.status).toBe(404);
         expect(response.body.message).toBe(`Omooo! wallet with id ${WALLET_THAT_DOES_NOT_EXISTS} was not found`);
     });
-})
+
+    it('should delete the user"s wallet', async () => {
+        const WALLET_ID = "93vd4viGbgtaYW62";
+        const response = await makeDeleteRequest(`/api/wallets/${WALLET_ID}`);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe("Wallet deleted successfully");
+    });
+
+    it('should throw an error if the wallet does not exist', async () => {
+        const WALLET_THAT_DOES_NOT_EXISTS = 'ohjfbj3h80';
+        const response = await makeDeleteRequest(`/api/wallets/${WALLET_THAT_DOES_NOT_EXISTS}`);
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe("Unable to delete wallet");
+    });
+
+
+});

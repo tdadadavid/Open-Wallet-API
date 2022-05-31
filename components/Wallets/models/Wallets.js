@@ -78,6 +78,22 @@ class Wallets {
         })
     }
 
+    static deleteByID(id){
+        const statement = "DELETE FROM test_openwallet.test_wallets WHERE id = ?";
+
+        return new Promise((resolve, reject) => {
+            db.query(statement, id, (err, result) => {
+                if (err){
+                    reject(err);
+                }else{
+                    resolve(result.affectedRows > 0);
+                }
+            });
+        });
+    }
+
+    // static deposit()
+
 }
 
 

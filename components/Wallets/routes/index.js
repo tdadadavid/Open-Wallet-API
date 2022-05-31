@@ -1,33 +1,37 @@
 const { Router } = require('express');
 const walletController = require('../controllers')
+const walletDepositController = require('../controllers/TransactionController');
 const verifyToken = require("../../../middleware/auth");
-const validateInputs = require('../validators');
+const { validateInputs, validateDeposits } = require('../validators');
 
 
 const walletRouter = Router();
 
 walletRouter.use(verifyToken);
 
+// TODO
 walletRouter
     .route('/api/wallets')
     .post(validateInputs, walletController.createWallet)
-    .get(walletController.getUserWallets)
+    .get(walletController.getUserWallets);
 
 
-//TODO
+
+
+// TODO
 walletRouter
     .route('/api/wallets/:id')
     .get(walletController.getWallet)
-    // .delete(validateInputs, walletController.closeWallet);
+    .delete(walletController.closeWallet);
 
-//TODO
+// TODO
+walletRouter
+    .route('/api/wallets/:id/deposits')
+    .post(validateDeposits, walletDepositController.makeDeposit)
+    // .get(walletDepositController.getDeposits)
+
+// TODO
 // walletRouter
-//     .route('/api/wallets/:id/deposits')
-//     .post(depositSchema, walletController.makeDeposit)
-//     .get(walletRouter.getDeposits)
-
-//TODO
-// walletRouter.get('/api/wallets/:id/deposit/:id', walletRouter.getDepositsHistory);
-
+//     .get('/api/wallets/:source_wallet_id/deposit/:deposit_id', walletRouter.getDepositsHistory);
 
 module.exports = walletRouter;

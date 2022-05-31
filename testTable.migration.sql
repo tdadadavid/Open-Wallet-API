@@ -46,3 +46,53 @@ CREATE TABLE if not exists test_openWallet.test_wallets (
 
 # <!-- Alter test_wallets -->
 ALTER TABLE test_openWallet.test_wallets MODIFY COLUMN `currency` VARCHAR(6) NOT NULL;
+
+
+# <!-- Create deposits table --> (don't use).
+CREATE TABLE if not exists test_openWallet.test_deposits (
+    `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY ,
+    `amount` DECIMAL(9,4) NOT NULL,
+    `wallet_id` VARCHAR(16) NOT NULL,
+    FOREIGN KEY (wallet_id) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DROP TABLE test_openWallet.test_deposits;
+
+
+# <!-- Create Transactions table -->
+CREATE TABLE if not exists test_openWallet.test_transactions (
+    `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY,
+    `type` VARCHAR(12) NOT NULL,
+    `amount` DECIMAL(9,4) NOT NULL,
+    # withdraw-from, #transfer-from  #depost-into,
+    # #transfer-to # am not sure of this implementation
+    `source_wallet` VARCHAR(16) NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (source_wallet) REFERENCES test_wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+# I am only keeping track if the wallet affected
+#    -> Transfer-from source_wallet
+#    -> Deposit-into source_wallet
+#    -> Withdraw-from source_wallet
+
+
+
+# <!-- Triggers  -->
+
+# <!-- Create trigger for deposits -->
+
+
+# <!-- Create triggers for withdrawal -->
+
+
+# <!-- Create triggers for transfer -->
+
+
+
+# I don't know whether stored procedures are needed now.
+
+
+
+
+

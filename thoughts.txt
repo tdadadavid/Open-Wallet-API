@@ -1,5 +1,5 @@
 // Sign in process
-*User gives
+*User gives [X]
     - password
     - email
     - names
@@ -12,7 +12,7 @@
 
 
 
-// Login process
+// Login process [X]
 * User gives
     - email
     - password.
@@ -43,11 +43,11 @@
 * Verify the user token
 * Verify the currency given
 
-* Save the wallet to the db, using the user_id;
+* Save the wallet to the db, using the user_id [X]
 
 //TODO
---> get a wallet
---> delete a wallet
+--> get a wallet [X]
+--> delete a wallet [X]
 
 //TODO
 --> make deposits
@@ -55,31 +55,64 @@
 --> get deposits details
 
 
+* Deposit Schema
+    - amount number.
+
+* How do I structure the transactions table?
+
+    --> Structure
+        - id,
+        - type,
+        - amount,
+        - source_wallet_id
+        - created_at
+
+    --> Types.
+        - Deposits (one account involved).
+        - Withdrawals (one account involved).
+        - Transfers (two accounts involved).
+
+* But what about transfers that involves two wallets?
+
+* Creating triggers each type of transaction
+* These triggers should be 'after' based triggers.
+    -> The deposits-trigger should update the current wallet balance.
+    -> The withdrawal-trigger should update the current wallet balance.
+    -> The transfer-trigger should the balance of two wallets balance.
+            -> source_wallet.
+            -> destination_wallet.
+       nd should also store the details in a transfer_details table.
+
+* Stored procedures for performing the particular 'type'
+* operation on the wallet.
+
+* Maybe there can a scheduler for grouping the user transactions
+* After a particular duration time.
 
 
+* Transaction history format
+    - type.
+    - amount.
+    - when transaction happened.
+    - wallet used (in the case where a user has multiple wallets).
+
+***Their similarities***
+    - the amount of the transaction (amount to be {transferred, withdrawn, deposited})
+    - the wallet the money goes into or comes from (destination_wallet / source_wallet)
+    - time the transaction was made (created_at)
 
 
+* Transaction
+    ---> id
+    ---> type
+    ---> created_at
+    ---> amount
+    // check out stored procedures.
+    // check out triggers. (this is the rescue strategy)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Deposits
+    -> id -> varchar(18) not null,
+    -> source_wallet_id -> varchar(16) not null foreign key, * the user has id,
+    -> amount -> decimal (9,4) not null,
+    -> created_at -> timestamp, current-timestamp.
