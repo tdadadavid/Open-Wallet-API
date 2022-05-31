@@ -1,5 +1,4 @@
 const Deposit = require('../models/Deposit');
-const Wallet = require('../models/Wallet');
 const {errorMessage, successResponse} = require("../../../utils/apiResponses");
 
 const DepositController = {

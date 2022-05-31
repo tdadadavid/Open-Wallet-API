@@ -1,9 +1,7 @@
 const { Router } = require('express');
 const walletController = require('../controllers')
-const walletDepositController = require('../controllers/TransactionController');
 const verifyToken = require("../../../middleware/auth");
-const verifyWallet = require('../../../middleware/verifyWallet')
-const { validateInputs, validateDeposits } = require('../validators');
+const validateInputs = require('../validators');
 
 
 const walletRouter = Router();
@@ -28,16 +26,6 @@ walletRouter
     .get(walletController.getWallet)
     .delete(walletController.closeWallet);
 
-
-// TODO
-walletRouter
-    .route('/api/wallets/:id/deposits')
-    .post(verifyWallet, validateDeposits, walletDepositController.makeDeposit)
-    .get(verifyWallet, walletDepositController.getDeposits);
-
-
-walletRouter.route('/api/wallets/:source_wallet_id/deposits/:deposit_id')
-    .get(verifyWallet, walletDepositController.getDepositDetails);
 
 
 module.exports = walletRouter;
