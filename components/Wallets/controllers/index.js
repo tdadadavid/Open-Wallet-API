@@ -1,4 +1,4 @@
-const Wallet = require('../models/Wallets');
+const Wallet = require('../models/Wallet');
 const {errorMessage, successResponse} = require("../../../utils/apiResponses");
 
 const WalletController = {

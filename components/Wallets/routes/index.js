@@ -33,7 +33,7 @@ walletRouter
 walletRouter
     .route('/api/wallets/:id/deposits')
     .post(verifyWallet, validateDeposits, walletDepositController.makeDeposit)
-    // .get(walletDepositController.getDeposits)
+    .get(verifyWallet, walletDepositController.getDeposits)
 
 // TODO
 // walletRouter

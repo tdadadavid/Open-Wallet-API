@@ -1,5 +1,5 @@
 const {errorMessage} = require("../utils/apiResponses");
-const Wallet =  require('../components/Wallets/models/Wallets')
+const Wallet =  require('../components/Wallets/models/Wallet')
 
 
 const verifyWallet = async (req, res, next) => {

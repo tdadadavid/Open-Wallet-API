@@ -24,9 +24,9 @@ describe('Deposit Tests', () =>  {
             .send(inputs);
     }
 
-    const makeGetRequest = (url) => {
+    const makeGetRequest = (wallet_id) => {
         return request(app)
-            .get(url)
+            .get(`/api/wallets/${wallet_id}/deposits`)
             .set('x-auth-token', token);
     }
 
@@ -55,6 +55,19 @@ describe('Deposit Tests', () =>  {
         expect(response.body.message).toBe('Transaction [deposit] successful');
     });
 
+    it('should return 404 if the wallet has no deposit', async () => {
+        const wallet_that_has_no_deposit = '4VL7d2WMWS-z9kA1'
+        const response = await makeGetRequest(wallet_that_has_no_deposit);
+        // expect(response.status).toBe(404);
+        expect(response.body.message).toEqual("No deposit has been made to this wallet");
+    });
 
+    it('should return 200 if the wallet has deposit', async () => {
+        const wallet_that_has_deposits = 'cYpYDcZv32lrzq1K';
+        const response = await makeGetRequest(wallet_that_has_deposits);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe("Here you go. Transactions [deposits]");
+
+    });
 
 });

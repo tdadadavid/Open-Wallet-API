@@ -1,7 +1,7 @@
 const { db } = require('../../../database');
 const nanoid = require('nanoid');
 
-class Wallets {
+class Wallet {
 
     constructor(currency, user) {
         this.id = nanoid.nanoid(16);
@@ -20,7 +20,7 @@ class Wallets {
 
     static transform(array){
         return array.map(result => {
-            const newWallet = new Wallets(result.currency, result.user_id);
+            const newWallet = new Wallet(result.currency, result.user_id);
             newWallet.amount = result.amount;
             newWallet.id = result.id;
             return newWallet;
@@ -97,4 +97,4 @@ class Wallets {
 }
 
 
-module.exports = Wallets;
+module.exports = Wallet;
