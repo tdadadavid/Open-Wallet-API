@@ -62,7 +62,8 @@ class Wallets {
     }
 
     static findByID(id){
-        const statement = "SELECT * FROM test_openwallet.test_wallets WHERE id = ?";
+        console.log(id);
+        const statement = `SELECT * FROM test_openwallet.test_wallets WHERE id = ?`;
 
         return new Promise((resolve, reject) => {
             db.query(statement, id, (err, results) => {

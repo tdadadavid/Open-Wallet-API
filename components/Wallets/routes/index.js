@@ -29,12 +29,10 @@ walletRouter
     .delete(walletController.closeWallet);
 
 
-walletRouter.user(verifyWallet)
-
 // TODO
 walletRouter
     .route('/api/wallets/:id/deposits')
-    .post(validateDeposits, walletDepositController.makeDeposit)
+    .post(verifyWallet, validateDeposits, walletDepositController.makeDeposit)
     // .get(walletDepositController.getDeposits)
 
 // TODO

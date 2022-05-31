@@ -17,9 +17,11 @@ class Transactions {
 
         return new Promise((resolve, reject) => {
             db.query(statement, values, (err, result) => {
-                if(err) reject(err)
+                if(err){
+                    reject(err);
+                }
                 else{
-
+                    resolve(true);
                 }
             });
         });;

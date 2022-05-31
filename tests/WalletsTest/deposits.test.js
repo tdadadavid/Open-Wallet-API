@@ -17,9 +17,9 @@ describe('Deposit Tests', () =>  {
 
     });
 
-    const makePostRequest = () => {
+    const makePostRequest = (wallet_id) => {
         return request(app)
-            .post('/api/wallets/:id/deposits')
+            .post(`/api/wallets/${wallet_id}/deposits`)
             .set('x-auth-token', token)
             .send(inputs);
     }
@@ -34,7 +34,7 @@ describe('Deposit Tests', () =>  {
     it('should return 400 error if no deposit amount is given', async () => {
         inputs.amount = undefined;
 
-        const response = await makePostRequest();
+        const response = await makePostRequest('mPo0qpV3sM82s56k');
         expect(response.status).toBe(400);
         expect(response.body.message).toBe("Error! cannot make deposit, \"amount\" is required");
     });
@@ -42,17 +42,17 @@ describe('Deposit Tests', () =>  {
     it('should return error if deposit is less than 100', async () => {
         inputs.amount = 10;
 
-        const response = await makePostRequest();
+        const response = await makePostRequest('mPo0qpV3sM82s56k');
         expect(response.status).toBe(400);
         expect(response.body.message).toBe('Error! cannot make deposit, \"amount\" must be greater than or equal to 100');
     });
 
     it('should return 200 when deposit is made', async () => {
-        inputs.amount = 1000;
+        inputs.amount = 10000;
 
-        const response = await makePostRequest();
-        expect(response.status).toBe(200);
-        expect(response.body.message).toBe('Amount deposited successfully');
+        const response = await makePostRequest('mPo0qpV3sM82s56k');
+        expect(response.status).toBe(201);
+        expect(response.body.message).toBe('Transaction [deposit] successful');
     });
 
 
