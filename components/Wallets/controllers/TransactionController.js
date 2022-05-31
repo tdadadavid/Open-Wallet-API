@@ -16,12 +16,11 @@ const TransactionController = {
         // update the value of the wallet here in javascript while the triggers
         // in sql will update it at database level, because of fast performance
 
-        wallet.amount += transaction.amount;
+        wallet.amount = parseFloat(wallet.amount) + amount;
 
         try {
             const status = await Transaction.deposit(transaction);
             if(!status) return errorMessage(res, 500, "Unable to perform deposit");
-            console.log(wallet);
             return successResponse(res, 201, "Transaction [deposit] successful", wallet.toJSON());
         }catch (err){
             console.log(err);
