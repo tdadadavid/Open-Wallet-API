@@ -8,6 +8,8 @@ describe('Deposit Tests', () =>  {
 
     let token;
     let inputs;
+    let postUrl;
+    let getUrl;
 
     beforeEach(() => {
 
@@ -18,15 +20,17 @@ describe('Deposit Tests', () =>  {
     });
 
     const makePostRequest = (wallet_id) => {
+        postUrl = `/api/wallets/${wallet_id}/deposits`;
         return request(app)
-            .post(`/api/wallets/${wallet_id}/deposits`)
+            .post(postUrl)
             .set('x-auth-token', token)
             .send(inputs);
     }
 
     const makeGetRequest = (wallet_id) => {
+        getUrl = `/api/wallets/${wallet_id}/deposits`;
         return request(app)
-            .get(`/api/wallets/${wallet_id}/deposits`)
+            .get(getUrl)
             .set('x-auth-token', token);
     }
 
@@ -58,7 +62,7 @@ describe('Deposit Tests', () =>  {
     it('should return 404 if the wallet has no deposit', async () => {
         const wallet_that_has_no_deposit = '4VL7d2WMWS-z9kA1'
         const response = await makeGetRequest(wallet_that_has_no_deposit);
-        // expect(response.status).toBe(404);
+        expect(response.status).toBe(404);
         expect(response.body.message).toEqual("No deposit has been made to this wallet");
     });
 
@@ -66,7 +70,33 @@ describe('Deposit Tests', () =>  {
         const wallet_that_has_deposits = 'cYpYDcZv32lrzq1K';
         const response = await makeGetRequest(wallet_that_has_deposits);
         expect(response.status).toBe(200);
-        expect(response.body.message).toBe("Here you go. Transactions [deposits]");
+        expect(response.body.message).toBe("Here you go, Transactions [deposits].");
+    });
+
+    it('should return the details of a particular deposit', async () => {
+        const wallet_that_has_deposits = 'cYpYDcZv32lrzq1K';
+        const deposit_made_to_this_wallet = '71zrw7IwWm3DU0lD69';
+
+        getUrl = `/api/wallets/${wallet_that_has_deposits}/deposits/${deposit_made_to_this_wallet}`;
+
+        const response = await request(app)
+                                .get(getUrl)
+                                .set('x-auth-token', token);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe("Deposit found.");
+    });
+
+    it('should return 404 error if a deposit does not exists', async () => {
+        const wallet_that_has_deposits = 'cYpYDcZv32lrzq1K';
+        const deposit_that_does_not_exists = 'doesnotexist';
+
+        getUrl = `/api/wallets/${wallet_that_has_deposits}/deposits/${deposit_that_does_not_exists}`;
+
+        const response = await request(app)
+            .get(getUrl)
+            .set('x-auth-token', token);
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe("Deposit not found.");
 
     });
 

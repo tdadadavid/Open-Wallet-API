@@ -17,7 +17,7 @@ walletRouter
     .get(walletController.getUserWallets);
 
 
-// <!-- verify the wallet id -->
+// // <!-- verify the wallet id -->
 // TODO
 // Refactor the getWallet and close wallet
 // controller.
@@ -33,10 +33,11 @@ walletRouter
 walletRouter
     .route('/api/wallets/:id/deposits')
     .post(verifyWallet, validateDeposits, walletDepositController.makeDeposit)
-    .get(verifyWallet, walletDepositController.getDeposits)
+    .get(verifyWallet, walletDepositController.getDeposits);
 
-// TODO
-// walletRouter
-//     .get('/api/wallets/:source_wallet_id/deposit/:deposit_id', walletRouter.getDepositsHistory);
+
+walletRouter.route('/api/wallets/:source_wallet_id/deposits/:deposit_id')
+    .get(verifyWallet, walletDepositController.getDepositDetails);
+
 
 module.exports = walletRouter;

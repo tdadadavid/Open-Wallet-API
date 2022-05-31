@@ -37,11 +37,24 @@ const DepositController = {
         // wallet id
 
         try{
-            const wallet_deposits = await Deposit.getDepositsByWalletID(wallet.id);
+            const wallet_deposits = await Deposit.findDepositsByWalletID(wallet.id);
             if (!wallet_deposits) return errorMessage(res, 404, "No deposit has been made to this wallet");
-            return successResponse(res, 200, "Here you go. Transactions [deposits]", wallet_deposits[0].toJSON());
+            return successResponse(res, 200, "Here you go, Transactions [deposits].", wallet_deposits.map(deposit => deposit.toJSON()));
         }catch (e) {
             console.log(e);
+            errorMessage(res, 500, "Oops! an error occurred");
+        }
+    },
+
+    getDepositDetails: async (req, res) => {
+        const deposit_id = req.params.deposit_id;
+
+        try{
+            const specific_deposit = await Deposit.findDepositByID(deposit_id);
+            if (!specific_deposit) return errorMessage(res, 404, "Deposit not found.");
+            return successResponse(res, 200, "Deposit found.", specific_deposit);
+        }catch (err){
+            console.log(err);
             errorMessage(res, 500, "Oops! an error occurred");
         }
     }

@@ -22,7 +22,7 @@ class Deposit {
             const deposit = new Deposit(result.amount, result.source_wallet);
             deposit.created_at = result.created_at;
             return deposit;
-        })
+        });
     }
 
     static deposit(details){
@@ -43,7 +43,7 @@ class Deposit {
         });
     }
 
-    static getDepositsByWalletID(id){
+    static findDepositsByWalletID(id){
         const statement = "SELECT * FROM test_openwallet.test_deposits WHERE source_wallet = ?";
 
         return new Promise((resolve, reject) => {
@@ -53,14 +53,31 @@ class Deposit {
                 }else if (result.length === 0){
                     resolve(null);
                 }else {
-                    console.log(result);
                     const deposits = this.transform(result);
-                    console.log(deposits);
                     resolve(deposits);
                 }
             });
         });
     }
+
+    static findDepositByID(id){
+        const statement = "SELECT * FROM test_openwallet.test_deposits WHERE id = ?";
+
+        return new Promise((resolve, reject) => {
+            db.query(statement, id, (err, result) => {
+                if (err){
+                    reject(err);
+                }else if(result.length === 0){
+                    resolve(null);
+                }else{
+                    const deposit = this.transform(result);
+                    resolve(deposit);
+                }
+            });
+        });
+    }
+
+
 }
 
 module.exports = Deposit;
