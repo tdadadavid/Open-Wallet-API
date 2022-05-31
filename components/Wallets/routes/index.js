@@ -2,6 +2,7 @@ const { Router } = require('express');
 const walletController = require('../controllers')
 const walletDepositController = require('../controllers/TransactionController');
 const verifyToken = require("../../../middleware/auth");
+const verifyWallet = require('../../../middleware/verifyWallet')
 const { validateInputs, validateDeposits } = require('../validators');
 
 
@@ -16,13 +17,19 @@ walletRouter
     .get(walletController.getUserWallets);
 
 
-
+// <!-- verify the wallet id -->
+// TODO
+// Refactor the getWallet and close wallet
+// controller.
 
 // TODO
 walletRouter
     .route('/api/wallets/:id')
     .get(walletController.getWallet)
     .delete(walletController.closeWallet);
+
+
+walletRouter.user(verifyWallet)
 
 // TODO
 walletRouter
