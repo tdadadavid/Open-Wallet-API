@@ -65,7 +65,17 @@ BEGIN
     UPDATE wallets
         SET wallets.amount = wallets.amount + NEW.amount
         WHERE wallets.id = NEW.source_wallet;
-end
+end;
 
 
-# <!-- wthdaal tggr -->
+# <!-- Withdrawals trigger -->
+CREATE TRIGGER withdraw_after_insert
+    AFTER INSERT ON withdrawals FOR EACH ROW
+BEGIN
+    UPDATE wallets
+        SET wallets.amount = wallets.amount - NEW.amount
+        WHERE wallets.id = NEW.source_wallet;
+end;
+
+
+# <!-- Transfers trigger -->

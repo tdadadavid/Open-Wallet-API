@@ -125,3 +125,20 @@
     -> is there going to be tax for each withdrawal [❌]
     -> least amount to be withdrawn is 100.
     -> The Highest amount that can be withdrawn at once 1,000,000
+
+* Transfers
+    -> id -> varchar(18),
+    -> amount -> decimal (13, 4) not null,
+    -> source_wallet -> varchar(16) not null foreign key,
+    -> destination_wallet -> varchar(16) not null foreign key,
+    -> created_at -> timestamp, current-stamp
+
+* Considerations
+    -> check the currencies of each wallet and get their conversion
+    -> The least amount to withdraw is 100,
+    -> The highest amount that can be transferred at once 10,000,000
+    -> the source_wallet must have a balance >= amount_been_transferred.
+    -> check if the two wallets involved are of the same currency
+            --> true, continue
+            --> false, get the conversion between the two currencies
+    ->

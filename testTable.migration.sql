@@ -139,7 +139,24 @@ BEGIN
 end;
 
 # <!-- Create triggers for transfer -->
+CREATE TRIGGER transfer_after_insert_add
+    AFTER INSERT ON test_openWallet.test_transfers FOR EACH ROW
 
+    BEGIN
+        UPDATE test_openWallet.test_wallets
+            SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount + NEW.amount
+            WHERE test_openWallet.test_wallets.id = NEW.destination_wallet;
+
+    end;
+
+CREATE TRIGGER transfer_after_insert_deduct
+    AFTER INSERT ON test_openWallet.test_transfers FOR EACH ROW
+
+    BEGIN
+        UPDATE test_openWallet.test_wallets
+            SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount - NEW.amount
+        WHERE test_openWallet.test_wallets.id = NEW.source_wallet;
+    end;
 
 
 # I don't know whether stored procedures are needed now.
