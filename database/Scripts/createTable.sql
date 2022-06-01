@@ -58,17 +58,14 @@ CREATE TABLE if not exists transfers (
 
 
 # <!-- Deposits trigger -->
-DELIMITER $$
-
 CREATE TRIGGER deposits_after_insert
     AFTER INSERT ON deposits FOR EACH ROW
 
 BEGIN
     UPDATE wallets
         SET wallets.amount = wallets.amount + NEW.amount
-        WHERE wallets.id = NEW.id;
-end $$
-
-DELIMITER ;
+        WHERE wallets.id = NEW.source_wallet;
+end
 
 
+# <!-- wthdaal tggr -->

@@ -125,11 +125,18 @@ BEGIN
     UPDATE test_openWallet.test_wallets
     SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount + NEW.amount
     WHERE test_openWallet.test_wallets.id = NEW.source_wallet;
-end
+end;
 
 
 # <!-- Create triggers for withdrawal -->
-
+CREATE TRIGGER withdraw_after_insert
+    AFTER INSERT ON test_openWallet.test_withdrawals
+    FOR EACH ROW
+BEGIN
+    UPDATE test_openWallet.test_wallets
+    SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount - NEW.amount
+    WHERE test_openWallet.test_wallets.id = NEW.source_wallet;
+end;
 
 # <!-- Create triggers for transfer -->
 

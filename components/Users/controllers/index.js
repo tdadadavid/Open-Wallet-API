@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const { generateAccessToken, generateRefreshToken } = require('../../../utils/tokenFunc');
-const { hashUserPassword, successMessage, errorResponse, errorMessage, successResponse} = require('../../../utils/apiResponses');
+const { hashUserPassword,errorMessage, successResponse} = require('../../../utils/apiResponses');
 const {compare} = require("bcrypt");
 
 const UserController = {
@@ -42,11 +42,17 @@ const UserController = {
         if(!user) return errorMessage(res, 404, "Email not found");
 
         // check if the passwords are correct
-        const successful = await compare(payload.password, user[0].password);
-        if(!successful) return errorMessage(res, 400, "Password doesn't match");
+        try{
+            const successful = await compare(payload.password, user[0].password);
+            if (!successful) return errorMessage(res, 400, "Password doesn't match");
 
-        // log the user in
-        successResponse(res, 200, "User logged in", user[0]);
+            // log the user in
+            successResponse(res, 200, "User logged in", user[0]);
+        }catch (err) {
+            console.log(err)
+            errorMessage(res, 500, "Oops! an error occurred.");
+        }
+        // TODO, put toJSON
     },
 
 

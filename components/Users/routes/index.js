@@ -9,7 +9,7 @@ const validateInputs = require('../validators/loginValidator')
 const userRouter = Router();
 
 userRouter.post('/api/auth/users',validateNewUserInputs, ensureUniqueEmail, userController.signUp);
-userRouter.post('/api/auth/users/login',verifyToken, validateInputs, userController.login)
+userRouter.post('/api/auth/users/login',verifyToken, validateInputs, userController.login);
 
 
 module.exports = userRouter;

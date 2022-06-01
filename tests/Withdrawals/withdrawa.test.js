@@ -14,11 +14,12 @@ describe('Withdrawal module', () => {
     let token;
 
     const wallet_with_no_cash = '2tYViygHeZver2Bh';
-    const wallet_with_cash = 'cYpYDcZv32lrzq1K'
+    const wallet_with_cash = 'cYpYDcZv32lrzq1K';
+    token = generateAccessToken(user.id);
 
 
     beforeEach(() => {
-        token = generateAccessToken(user.id);
+        jest.setTimeout(1000000000000000000000000);
         input = { amount: 1000 };
     });
 
@@ -38,9 +39,48 @@ describe('Withdrawal module', () => {
     }
 
 
+
+    // TODO
+    // learn how to generate custom error messages for each validation failure
+
     it('should return 400 error if amount is not provided', async () =>{
-        const response = await makeGetRequest(wallet_with_cash);
+        input.amount = undefined;
+        const response = await makePostRequest(wallet_with_cash);
         expect(response.status).toBe(400);
-        expect(response.body.message).toBe("Transaction [withdrawal] failed, no amount provided");
+        // expect(response.body.message).toBe("Error! ");
     });
-})
+
+    it('should return 400 if amount is greater than the minimum withdrawal amount', async () => {
+        input.amount = 90;
+        const response = await makePostRequest(wallet_with_cash);
+        expect(response.status).toBe(400);
+    });
+
+    it('should return 400 if the amount to be withdrawn is greater than amount in the wallet', async () => {
+        input.amount = 100000;
+        const response = await makePostRequest(wallet_with_no_cash);
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe("Error! insufficient wallet balance");
+    });
+
+    it('should return 200 on successful withdrawal', async () => {
+        input.amount = 432;
+        const response = await makePostRequest(wallet_with_cash);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toEqual("Transaction [withdrawal] successful");
+    });
+
+    it('should return 200 if the wallet has withdrawal history', async () => {
+        input.amount = 1230;
+        const response = await makeGetRequest(wallet_with_cash);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe("Here you go.");
+    });
+
+    it('should return 404 if the wallet has no withdrawal history', async () => {
+        const response = await makeGetRequest(wallet_with_no_cash);
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe("This wallet has no Transaction [withdraw].")
+    });
+
+});

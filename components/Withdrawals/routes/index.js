@@ -1,17 +1,21 @@
 const { Router } =  require('express');
 const verifyWallet = require("../../../middleware/verifyWallet");
+const validateInputs = require('../validators');
+const withdrawalsController = require('../controllers');
+const verifyToken = require("../../../middleware/auth");
 
 
 
-depositRouter = Router();
+withdrawalRouter = Router();
+
+withdrawalRouter.use(verifyToken);
+// withdrawalRouter.use();
 
 
-depositRouter.use(verifyWallet);
-
-
-depositRouter
+withdrawalRouter
     .route('/api/wallets/:id/withdrawals')
-    .post(validateInputs, withdrawalsController.makeWithdrawal);
+    .post(verifyWallet,validateInputs, withdrawalsController.makeWithdrawal)
+    .get(verifyWallet, withdrawalsController.getAllWithdrawals);
 
 
-module.exports = depositRouter;
+module.exports = withdrawalRouter;

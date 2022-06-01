@@ -10,8 +10,6 @@
 * Send the user access token
 
 
-
-
 // Login process [X]
 * User gives
     - email
@@ -127,3 +125,35 @@
     -> is there going to be tax for each withdrawal [❌]
     -> least amount to be withdrawn is 100.
     -> The Highest amount that can be withdrawn at once 1,000,000
+
+
+
+
+
+
+
+
+
+
+
+    people <<- routes ->> controller ->> models ->> database.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

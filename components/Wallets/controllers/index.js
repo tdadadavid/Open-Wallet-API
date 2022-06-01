@@ -38,7 +38,7 @@ const WalletController = {
 
         try{
             const wallet = await Wallet.findByID(id);
-            if (wallet === null) return errorMessage(res, 404, `Omooo! wallet with id ${id} was not found`);
+            if (!wallet) return errorMessage(res, 404, `Omooo! wallet with id ${id} was not found`);
             successResponse(res, 200, "Here you go.", wallet[0].toJSON());
         }catch (e) {
             console.log(e);

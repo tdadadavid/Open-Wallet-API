@@ -14,7 +14,7 @@ class Wallet {
         return {
             id: this.id,
             currency: this.currency,
-            amount: this.amount
+            balance: this.amount
         }
     }
 
