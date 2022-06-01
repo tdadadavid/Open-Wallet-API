@@ -5,18 +5,13 @@ const withdrawalsController = require('../controllers');
 const verifyToken = require("../../../middleware/auth");
 
 
-
 withdrawalRouter = Router();
 
+
 withdrawalRouter.use(verifyToken);
-// withdrawalRouter.use();
 
 withdrawalRouter
-    .get(
-        '/api/wallets/:id/withdrawals/:withdrawal_id',
-        verifyWallet,
-        withdrawalsController.getSpecificDeposit
-    );
+    .get('/api/wallets/:id/withdrawals/:withdrawal_id', verifyWallet, withdrawalsController.getSpecificDeposit);
 
 withdrawalRouter
     .route('/api/wallets/:id/withdrawals')
