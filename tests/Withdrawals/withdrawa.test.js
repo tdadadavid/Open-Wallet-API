@@ -83,4 +83,23 @@ describe('Withdrawal module', () => {
         expect(response.body.message).toBe("This wallet has no Transaction [withdraw].")
     });
 
+    it('should return the details of a withdrawal', async () => {
+        const withdrawal_id = 'sxD9H2gtlnZiybT-Si';
+        const response = await request(app)
+                .get(`/api/wallets/${wallet_with_cash}/withdrawals/${withdrawal_id}`)
+                .set('x-auth-token', token);
+
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe("Here you go.");
+    });
+
+    it('should return 404 if the withdrawal doesn"t exists', async () => {
+        const withdrawal_id = 'doesnotexist';
+        const response = await request(app)
+            .get(`/api/wallets/${wallet_with_cash}/withdrawals/${withdrawal_id}`)
+            .set('x-auth-token', token);
+
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe(`No withdrawal with this id ${withdrawal_id} found.`);
+    });
 });

@@ -58,6 +58,23 @@ class Withdrawal {
             });
         });
     }
+
+    static getWithdrawalByID(id){
+        const statement = "SELECT * FROM test_openwallet.test_withdrawals WHERE id = ?";
+
+        return new Promise((resolve, reject) => {
+            db.query(statement, id, (err, results) => {
+                if (err){
+                    reject(err);
+                }else if (results.length === 0){
+                    resolve(null);
+                }else{
+                    const withdrawal = this.transform(results);
+                    resolve(withdrawal);
+                }
+            });
+        });
+    }
 }
 
 module.exports = Withdrawal;

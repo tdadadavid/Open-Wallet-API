@@ -11,7 +11,6 @@ const verifyToken = async (req, res, next) => {
 
     try{
         req.user = await verify(token, config.jwtSecrets.ACCESS_TOKEN_SECRET);
-        console.log(req.user);
         next()
     }catch(err){
         errorMessage(res, 400, "Invalid token provided");
