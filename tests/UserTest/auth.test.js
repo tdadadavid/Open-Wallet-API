@@ -14,7 +14,7 @@ describe('Testing verifyToken module', () => {
         return  request(app)
             .post('/api/auth/users/login')
             .set('x-auth-token', token)
-            .send({ email: "newemail@gmail.com", password: "myPassword1"});
+            .send({ email: "newemail@gmail.com", password: "myPassword1" });
     }
 
     it('should return 401 if the request header has no token', async () => {
@@ -38,7 +38,7 @@ describe('Testing verifyToken module', () => {
     it('should get the user id from the token', async () =>  {
         const response = await executeRequest();
         expect(response.status).toBe(200);
-        expect(response.body.data.id).toEqual("PhGiyOwyghZX")
+        expect(response.body.data.id).toEqual("R2POLxqGo6bv")
     });
 
 

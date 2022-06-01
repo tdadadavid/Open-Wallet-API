@@ -16,7 +16,7 @@ depositRouter
     .get(verifyWallet, walletDepositController.getDeposits);
 
 
-depositRouter.route('/api/wallets/:source_wallet_id/deposits/:deposit_id')
+depositRouter.route('/api/wallets/:wallet_id/deposits/:deposit_id')
     .get(verifyWallet, walletDepositController.getDepositDetails);
 
 

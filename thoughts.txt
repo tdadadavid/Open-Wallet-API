@@ -81,7 +81,7 @@
     -> The transfer-trigger should the balance of two wallets balance.
             -> source_wallet.
             -> destination_wallet.
-       nd should also store the details in a transfer_details table.
+       nd should also store the details in a transfer_details table. [no need for this any longer]
 
 * Stored procedures for performing the particular 'type'
 * operation on the wallet.
@@ -110,9 +110,20 @@
     // check out stored procedures.
     // check out triggers. (this is the rescue strategy)
 
-
-Deposits
+* Deposits
     -> id -> varchar(18) not null,
     -> source_wallet_id -> varchar(16) not null foreign key, * the user has id,
-    -> amount -> decimal (9,4) not null,
+    -> amount -> decimal (13,4) not null,
     -> created_at -> timestamp, current-timestamp.
+
+* Withdrawals
+    -> id -> varchar(18)
+    -> source_wallet -> varchar(16) not null foreign key,
+    -> amount_withdrawn -> decimal (13, 4) not null,
+    -> created_at -> timestamp, current-stamp
+
+* Considerations
+    -> check the amount left in the user's wallet [✅]
+    -> is there going to be tax for each withdrawal [❌]
+    -> least amount to be withdrawn is 100.
+    -> The Highest amount that can be withdrawn at once 1,000,000

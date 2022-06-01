@@ -71,6 +71,7 @@ describe('Wallets Test.', () => {
         expect(response.body.message).toBe(`Omooo! wallet with id ${WALLET_THAT_DOES_NOT_EXISTS} was not found`);
     });
 
+    // First make a wallet before runing this test
     it('should delete the user"s wallet', async () => {
         const WALLET_ID = "93vd4viGbgtaYW62";
         const response = await makeDeleteRequest(`/api/wallets/${WALLET_ID}`);

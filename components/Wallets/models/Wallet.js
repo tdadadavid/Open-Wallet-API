@@ -92,9 +92,6 @@ class Wallet {
         });
     }
 
-    // static deposit()
-
 }
-
 
 module.exports = Wallet;

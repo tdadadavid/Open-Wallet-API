@@ -63,7 +63,7 @@ CREATE TABLE if not exists test_openWallet.test_deposits (
 # <!-- Update the amount that can be deposited -->
 ALTER TABLE test_openWallet.test_deposits MODIFY COLUMN `amount` DECIMAL(13,4) NOT NULL;
 
-# <!-- Create withdrawals table --> (don't use).
+# <!-- Create Withdrawals table --> (don't use).
 CREATE TABLE if not exists test_openWallet.test_withdrawals (
      `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY ,
      `amount` DECIMAL(9,4) NOT NULL,

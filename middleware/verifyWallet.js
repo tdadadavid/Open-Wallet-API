@@ -4,7 +4,7 @@ const Wallet =  require('../components/Wallets/models/Wallet')
 
 const verifyWallet = async (req, res, next) => {
 
-    const id = req.params.id || req.params.source_wallet_id;
+    const id = req.params.id || req.params.wallet_id;
 
     try{
         const wallet = await Wallet.findByID(id);
