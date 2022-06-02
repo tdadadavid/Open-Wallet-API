@@ -12,7 +12,7 @@ class Transfer {
         this.created_at = undefined;
     }
 
-    toJSON(){
+    toJSONSpecific(){
         return {
             id: this.id,
             amount_transferred: this.amount,
@@ -23,6 +23,16 @@ class Transfer {
                 recipient_wallet_currency: this.destination_wallet_currency,
                 rate: (this.converted_amount / this.amount)
             },
+            created_at: this.created_at,
+        }
+    }
+
+    toJSON(){
+        return {
+            id: this.id,
+            amount_transferred: this.amount,
+            source_wallet: this.source_wallet,
+            recipient_wallet: this.destination_wallet,
             created_at: this.created_at,
         }
     }
@@ -73,6 +83,24 @@ class Transfer {
                 }
             });
         });
+    }
+
+    static findByTransferID(transfer_id, wallet_id){
+        const statement = "SELECT * FROM test_openwallet.test_transfers WHERE id = ? AND source_wallet = ?";
+
+        const values = [transfer_id, wallet_id];
+        return new Promise((resolve, reject) => {
+            db.query(statement, values, (err, results) => {
+                if (err){
+                    reject(err)
+                }else if (results.length === 0){
+                    resolve(null);
+                }else{
+                    const transfer = this.transform(results);
+                    resolve(transfer);
+                }
+            })
+        })
     }
 
 }

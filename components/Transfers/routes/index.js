@@ -10,6 +10,8 @@ const transferRouter = Router();
 
 transferRouter.use(verifyToken);
 
+transferRouter.get('/api/wallets/:id/transfers/:transfer_id',verifyWallet, transferController.getSpecificTransfer)
+
 transferRouter
     .route('/api/wallets/:id/transfers')
     .post(verifyWallet,validateInputs, transferController.makeTransfer)

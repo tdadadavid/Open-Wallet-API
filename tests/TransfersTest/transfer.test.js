@@ -82,7 +82,7 @@ describe('Transfer module', () => {
     });
 
     it('should retrieve all the transfer made by this wallet', async () => {
-        const response = await makeGetRequest(EUR_source_wallet);
+        const response = await makeGetRequest(source_wallet_with_sufficient_balance);
         expect(response.status).toBe(200);
         expect(response.body.message).toBe("Here you go.");
     });
@@ -90,6 +90,24 @@ describe('Transfer module', () => {
     it('should return 404 if the wallet has no transfer history', async () => {
         const response = await makeGetRequest(source_wallet_with_insufficient_balance);
         expect(response.status).toBe(404);
-        expect(response.body.message).toBe("Wallet has no Transaction [transfer]")
+        expect(response.body.message).toBe("Wallet has no Transaction [transfer]");
+    });
+
+    it('should return 404 if the transfer id doesn"t exists', async () => {
+        let transfer_id_that_does_not_exists = '8XqSOwnymaHpjsMPZ1';
+        const response = await request(app)
+            .get(`/api/wallets/${source_wallet_with_sufficient_balance}/transfers/${transfer_id_that_does_not_exists}`)
+            .set('x-auth-token', token);
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe("Transaction [transfer] does not exists");
+    });
+
+    it('should return 200 if the transaction exists in the wallet', async () => {
+        let transfer_id = 'b0F8u-FqaVZbwlQR8Z';
+        const response = await request(app)
+            .get(`/api/wallets/${source_wallet_with_sufficient_balance}/transfers/${transfer_id}`)
+            .set('x-auth-token', token);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe("Here you go.");
     });
 });

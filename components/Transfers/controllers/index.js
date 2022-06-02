@@ -43,6 +43,20 @@ const TransferController = {
             console.log(e);
             errorMessage(res, 500, "Oops! an error occurred.");
         }
+    },
+
+    getSpecificTransfer: async (req, res) => {
+        const { transfer_id } = req.params;
+        const wallet_id = req.wallet[0].id;
+
+        try{
+            const transfer = await Transfer.findByTransferID(transfer_id,  wallet_id);
+            if (!transfer) return errorMessage(res, 404, "Transaction [transfer] does not exists");
+            successResponse(res, 200, "Here you go.", transfer[0].toJSONSpecific());
+        }catch (err){
+            console.log(err);
+            errorMessage(res, 500, "Oops! an error occurred.");
+        }
     }
 }
 
