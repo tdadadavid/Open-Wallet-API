@@ -151,3 +151,7 @@
     -> eg USD -->> NGN (100USD -->> NGN)
     -> then deduct 100 from the USD account
     -> add (converted_amount) to the NGN account.
+
+
+* Retrieving all wallets.
+    -->> use the source_wallet

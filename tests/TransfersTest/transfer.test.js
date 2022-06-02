@@ -44,10 +44,6 @@ describe('Transfer module', () => {
             .set('x-auth-token', token);
     }
 
-    // it('should return 404 if the destination wallet does not exists', async () => {
-    //
-    // });
-
     // <!-- schema validation -->
     it('should return 400 if destination_wallet is not given', async () => {
         input.destination_wallet_id = '';
@@ -83,5 +79,17 @@ describe('Transfer module', () => {
     it('should use the exchange rates to transfer if the two wallets have different currencies', async () => {
         const response = await makePostRequest(EUR_source_wallet);
         expect(response.status).toBe(201);
+    });
+
+    it('should retrieve all the transfer made by this wallet', async () => {
+        const response = await makeGetRequest(EUR_source_wallet);
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe("Here you go.");
+    });
+
+    it('should return 404 if the wallet has no transfer history', async () => {
+        const response = await makeGetRequest(source_wallet_with_insufficient_balance);
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe("Wallet has no Transaction [transfer]")
     });
 });

@@ -3,6 +3,7 @@ const currencyConverter = require('../../../thirdPartyServices/exchangeRates')
 const {errorMessage, successResponse} = require("../../../utils/apiResponses");
 
 const TransferController = {
+
     makeTransfer: async (req, res) => {
         let { destination_wallet, wallet, amount } = req;
 
@@ -29,6 +30,19 @@ const TransferController = {
         }
 
 
+    },
+
+    getAllTransfers: async (req, res) => {
+        const wallet_id = req.wallet[0].id;
+
+        try{
+            const allTransfers = await Transfer.findBySourceWalletID(wallet_id);
+            if (!allTransfers) return errorMessage(res, 404, "Wallet has no Transaction [transfer]");
+            successResponse(res, 200, "Here you go.", allTransfers.map(transfer => transfer.toJSON()));
+        }catch (e) {
+            console.log(e);
+            errorMessage(res, 500, "Oops! an error occurred.");
+        }
     }
 }
 
