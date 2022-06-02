@@ -33,7 +33,7 @@ const config = {
         development: process.env.NODE_ENV
     },
 
-    exchangeRatesAPIKey: process.env.EXCHANGE_RATES_API_KEY
+    exchangeRatesAPIKey: process.env.EXCHANGE_RATES_API_KEY,
 }
 
 

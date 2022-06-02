@@ -48,7 +48,10 @@ CREATE TABLE if not exists transfers (
   `id` VARCHAR(18) NOT NULL UNIQUE PRIMARY KEY ,
   `amount` DECIMAL(13,4) NOT NULL,
   `source_wallet` VARCHAR(16) NOT NULL,
+   `source_wallet_currency` VARCHAR(6) NOT NULL,
   `destination_wallet` VARCHAR(16) NOT NULL,
+  `destination_wallet_currency` VARCHAR(6) NOT NULL,
+  `converted_amount` DECIMAL(13,4) DEFAULT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (source_wallet) REFERENCES wallets(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

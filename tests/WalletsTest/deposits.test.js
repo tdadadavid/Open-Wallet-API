@@ -52,9 +52,9 @@ describe('Deposit Tests', () =>  {
     });
 
     it('should return 200 when deposit is made', async () => {
-        inputs.amount = 189000.000;
+        inputs.amount = 18000.000;
 
-        const response = await makePostRequest('cYpYDcZv32lrzq1K');
+        const response = await makePostRequest('KzoLgfpqmaKvnXAC');
         expect(response.status).toBe(201);
         expect(response.body.message).toBe('Transaction [deposit] successful');
     });

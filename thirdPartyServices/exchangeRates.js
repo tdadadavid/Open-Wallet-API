@@ -1,32 +1,24 @@
 const fetch = require('node-fetch');
-const config = require('config');
+const config = require('../config/index');
 
-const requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: {
-        'content-type': 'application/json',
-        'apiKey': config.exchangeRatesAPIKey,
-    }
-};
 
-const specifications = async (from, to, amount) => {
+const converter = {
 
-    const url = `https://api.apilayer.com/fixer/convert?to=${to}&from=${from}&amount=${amount}`
-    const response = await fetch(url, requestOptions);
+    requestOptions: {
+        method: 'GET',
+        redirect: 'follow',
+        headers: {
+            apiKey: config.exchangeRatesAPIKey,
+        }
+    },
 
-    if (response.status === 200) return response.json();
+    getConversion: async (from, to, amount) => {
 
-    return "error";
+        const url = `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`;
+        const response = await fetch(url, converter.requestOptions)
+        return response.status === 200 ? response.json() : "error";
+    },
+
 }
 
-
-const getConversion = async (from, to, amount) => {
-    const result = await specifications(from, to, amount);
-    console.log(result);
-}
-
-
-module.exports = getConversion;
-
-
+module.exports = converter;

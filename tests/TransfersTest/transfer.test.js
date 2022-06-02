@@ -16,6 +16,7 @@ describe('Transfer module', () => {
 
     const source_wallet_with_sufficient_balance = '-vQ8dgSE6hAzM_N_';
     const source_wallet_with_insufficient_balance = 'mPo0qpV3sM82s56k'; // 19,191.0000
+    const EUR_source_wallet = 'KzoLgfpqmaKvnXAC';
 
     token = generateAccessToken(user.id);
 
@@ -24,7 +25,7 @@ describe('Transfer module', () => {
         jest.setTimeout(1000000000000000000000000);
         input = {
             amount: 1000,
-            destination_wallet_id: '2tYViygHeZver2Bh'
+            destination_wallet_id: 'FMTEvRiUotmdmjbu'
         };
     });
 
@@ -76,6 +77,11 @@ describe('Transfer module', () => {
 
     it('should return 200 when transfer is successful', async () => {
         const response = await makePostRequest(source_wallet_with_sufficient_balance);
+        expect(response.status).toBe(201);
+    });
+
+    it('should use the exchange rates to transfer if the two wallets have different currencies', async () => {
+        const response = await makePostRequest(EUR_source_wallet);
         expect(response.status).toBe(201);
     });
 });

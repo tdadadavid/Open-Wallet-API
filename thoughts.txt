@@ -142,3 +142,12 @@
             --> true, continue
             --> false, get the conversion between the two currencies
     ->
+
+    -> if the currencies are the same
+    -> eg NGN -->> NGN (100NGN -->> NGN)
+    -> just deduct and add the amount to each wallet.
+
+    -> if the currencies are different
+    -> eg USD -->> NGN (100USD -->> NGN)
+    -> then deduct 100 from the USD account
+    -> add (converted_amount) to the NGN account.

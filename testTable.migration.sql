@@ -87,6 +87,11 @@ CREATE TABLE if not exists test_openWallet.test_transfers (
 
 ALTER TABLE test_openWallet.test_transfers MODIFY COLUMN `amount` DECIMAL(13,4) NOT NULL;
 
+ALTER TABLE test_openWallet.test_transfers MODIFY COLUMN `source_wallet_currency` VARCHAR(6) NOT NULL AFTER source_wallet;
+ALTER TABLE test_openWallet.test_transfers MODIFY COLUMN `destination_wallet_currency` VARCHAR(6) NOT NULL AFTER destination_wallet;
+ALTER TABLE test_openWallet.test_transfers MODIFY COLUMN `converted_amount`DECIMAL(13,4)  DEFAULT NULL AFTER  destination_wallet_currency;
+
+
 # <!-- Don't copy -->
 DROP TABLE test_openWallet.test_deposits;
 
@@ -144,7 +149,7 @@ CREATE TRIGGER transfer_after_insert_add
 
     BEGIN
         UPDATE test_openWallet.test_wallets
-            SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount + NEW.amount
+            SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount + NEW.converted_amount
             WHERE test_openWallet.test_wallets.id = NEW.destination_wallet;
 
     end;

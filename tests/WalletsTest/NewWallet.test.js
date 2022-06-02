@@ -11,7 +11,7 @@ describe('Wallets Test.', () => {
 
         // this id is from the database.
         token = generateAccessToken('R2POLxqGo6bv');
-        inputs = { currency: 'NGN' };
+        inputs = { currency: 'CAD' };
 
     });
 

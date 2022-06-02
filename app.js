@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const config = require('./config');
 const router = require('./components');
 
