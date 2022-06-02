@@ -1,4 +1,4 @@
-CREATE DATABASE if not exists test_openWallet;
+CREATE DATABASE if not exists openWallet;
 
 # <!-- TABLE CREATION -->
 
@@ -85,21 +85,21 @@ end;
 
 # <!-- This trigger is for the recipient -->
 CREATE TRIGGER transfer_after_insert_add
-    AFTER INSERT ON test_openWallet.test_transfers FOR EACH ROW
+    AFTER INSERT ON transfers FOR EACH ROW
 
 BEGIN
-    UPDATE test_openWallet.test_wallets
-    SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount + NEW.converted_amount
-    WHERE test_openWallet.test_wallets.id = NEW.destination_wallet;
+    UPDATE wallets
+    SET wallets.amount = wallets.amount + NEW.converted_amount
+    WHERE wallets.id = NEW.destination_wallet;
 
 end;
 
 # <!-- This trigger is for the sender -->
 CREATE TRIGGER transfer_after_insert_deduct
-    AFTER INSERT ON test_openWallet.test_transfers FOR EACH ROW
+    AFTER INSERT ON transfers FOR EACH ROW
 
 BEGIN
-    UPDATE test_openWallet.test_wallets
-    SET test_openWallet.test_wallets.amount = test_openWallet.test_wallets.amount - NEW.amount
-    WHERE test_openWallet.test_wallets.id = NEW.source_wallet;
+    UPDATE wallets
+    SET wallets.amount = wallets.amount - NEW.amount
+    WHERE wallets.id = NEW.source_wallet;
 end;
