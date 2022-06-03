@@ -9,7 +9,7 @@ function setup() {
 
     beforeEach(() => {
         jest.setTimeout(1000000000000000000000);
-        truncateTable("test_users");
+        // truncateTable("test_users");
     });
 
     afterAll(() => {

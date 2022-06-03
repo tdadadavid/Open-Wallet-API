@@ -155,3 +155,20 @@
 
 * Retrieving all wallets.
     -->> use the source_wallet
+
+
+
+
+* Transactions
+    -> should I create a table, whereby for every transaction(deposit, withdrawal, transfer)
+    -> a trigger will store the
+        -> transaction type:
+        -> transaction amount:
+        -> transaction date:
+        -> wallet address:
+
+    -> or should I use inner join to scrape all transactions for a particular wallet
+    -> from (deposit, withdrawal, transfer)
+
+    // I will be given the wallet ID
+    // SELECT * FROM

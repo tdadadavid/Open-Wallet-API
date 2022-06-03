@@ -8,9 +8,9 @@ describe("New User routes", () => {
 
     const url = '/api/auth/users';
     const validUserInputs = {
-        firstname: "King",
-        lastname: "David",
-        email: "another@gmail.com",
+        firstname: "Anonymous",
+        lastname: "User",
+        email: "checkOult@gmail.com",
         password: "myPassword1",
         confirm_password: "myPassword1"
     };

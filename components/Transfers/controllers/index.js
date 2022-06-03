@@ -19,6 +19,7 @@ const TransferController = {
                 ? await currencyConverter.getConversion(source_wallet_currency, destination_wallet_currency, +amount)
                 : "";
 
+            //TODO check if the currency does not exist
             const convertedAmount = response.result ?? amount
 
             const transaction = new Transfer(+amount, wallet[0], destination_wallet[0], +convertedAmount);

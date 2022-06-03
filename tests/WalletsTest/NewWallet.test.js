@@ -10,8 +10,8 @@ describe('Wallets Test.', () => {
     beforeEach(() => {
 
         // this id is from the database.
-        token = generateAccessToken('R2POLxqGo6bv');
-        inputs = { currency: 'CAD' };
+        token = generateAccessToken('zhlwMde3eQWt');
+        inputs = { currency: 'GBP' };
 
     });
 

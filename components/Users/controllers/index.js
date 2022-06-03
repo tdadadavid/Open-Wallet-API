@@ -47,7 +47,7 @@ const UserController = {
             if (!successful) return errorMessage(res, 400, "Password doesn't match");
 
             // log the user in
-            successResponse(res, 200, "User logged in", user[0]);
+            successResponse(res, 200, "User logged in", user[0].toJSON());
         }catch (err) {
             console.log(err)
             errorMessage(res, 500, "Oops! an error occurred.");
