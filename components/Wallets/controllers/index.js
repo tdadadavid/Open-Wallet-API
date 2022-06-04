@@ -26,7 +26,8 @@ const WalletController = {
         try{
             const wallets = await Wallet.findByOwner(owner);
             if (!wallets) return errorMessage(res, 404, "Omooo! you don't have any wallet");
-            return successResponse(res, 200, "Here you go.", wallets[0].toJSON());
+            console.log(wallets);
+            return successResponse(res, 200, "Here you go.", wallets.map(wallet => wallet.toJSON()));
         }catch (e) {
             console.log(e);
             errorMessage(res, 500, "Oops! an error occurred");
@@ -51,7 +52,7 @@ const WalletController = {
 
         try{
             const isSuccessful = await Wallet.deleteByID(id);
-            if (!isSuccessful) return errorMessage(res, 400, "Unable to delete wallet");
+            if (!isSuccessful) return errorMessage(res, 404, `Wallet with id ${id} does not exists.`);
             return successResponse(res, 200, "Wallet deleted successfully");
         }catch (e) {
             console.log(e);

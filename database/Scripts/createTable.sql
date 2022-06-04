@@ -1,4 +1,6 @@
-CREATE DATABASE if not exists openWallet;
+CREATE DATABASE if not exists openwallet;
+
+use openwallet;
 
 # <!-- TABLE CREATION -->
 
@@ -17,7 +19,7 @@ CREATE TABLE if not exists users (
 CREATE TABLE if not exists wallets (
     `id` VARCHAR(16) NOT NULL UNIQUE PRIMARY KEY,
     `currency` VARCHAR(6) NOT NULL ,
-    `amount` DECIMAL(12, 4) NOT NULL,
+    `amount` DECIMAL(13, 4) NOT NULL,
     `user_id` VARCHAR(30) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

@@ -31,9 +31,8 @@ const DepositController = {
     getDeposits: async (req, res) => {
         const wallet = req.wallet[0];
 
-        // find all deposits transaction done
-        // to this particular wallet by using the
-        // wallet id
+        if (wallet.user_id !== req.user.id)
+            return  errorMessage(res, 400, "This is a stolen token");
 
         try{
             const wallet_deposits = await Deposit.findDepositsByWalletID(wallet.id);

@@ -33,7 +33,7 @@ class User {
 
     static save(user){
 
-        const statement = `INSERT INTO test_openwallet.test_users (id, firstname, lastname, email, token, password) 
+        const statement = `INSERT INTO  users (id, firstname, lastname, email, token, password) 
                             VALUES (?, ?, ?, ?, ?, ?)`;
 
         const values = [user.id, user.firstname, user.lastname, user.email, user.token, user.password];
@@ -52,7 +52,7 @@ class User {
     }
 
     static findByEmail(userEmail){
-        const statement = `SELECT * FROM test_openwallet.test_users WHERE email = ?`;
+        const statement = `SELECT * FROM  users WHERE email = ?`;
 
         return new Promise((resolve, reject) => {
             db.query(statement, userEmail , (err, results) => {

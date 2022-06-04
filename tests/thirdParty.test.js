@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
-const converter = require('../thirdPartyServices/exchangeRates')
+const converter = require('../services/exchangeRates')
 
 
 it('should return the amount converted', async () => {

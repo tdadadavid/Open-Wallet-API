@@ -3,10 +3,10 @@ const mysql = require('mysql2');
 
 
 const db = mysql.createConnection({
-    host: config.database.host,
-    user: config.database.user,
-    password: config.database.password,
-    database: config.database.name,
+    host: config.database.development.host,
+    user: config.database.development.user,
+    password: config.database.development.password,
+    database: config.database.development.name,
 });
 
 
@@ -45,7 +45,7 @@ function closeConnection(){
                 console.log("Oops! an error occurred");
                 reject(err)
             }else{
-                // console.log("connection closed");
+                console.log("connection closed");
             }
         });
     })

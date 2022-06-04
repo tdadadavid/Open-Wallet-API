@@ -1,5 +1,5 @@
 const Transfer = require('../models');
-const currencyConverter = require('../../../thirdPartyServices/exchangeRates')
+const currencyConverter = require('../../../services/exchangeRates')
 const {errorMessage, successResponse} = require("../../../utils/apiResponses");
 
 const TransferController = {

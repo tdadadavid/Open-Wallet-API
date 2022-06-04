@@ -20,6 +20,7 @@ class Deposit {
     static transform(array){
         return array.map(result => {
             const deposit = new Deposit(result.amount, result.source_wallet);
+            deposit.id = result.id;
             deposit.created_at = result.created_at;
             return deposit;
         });

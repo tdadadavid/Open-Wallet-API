@@ -40,6 +40,7 @@ class Transfer {
     static transform(array){
         return array.map(values => {
             const transfer = new Transfer(values.amount, values.source_wallet, values.destination_wallet, values.converted_amount);
+            transfer.id = values.id;
             transfer.source_wallet_currency = values.source_wallet_currency;
             transfer.destination_wallet_currency = values.destination_wallet_currency;
             transfer.created_at = values.created_at;
@@ -48,7 +49,7 @@ class Transfer {
     }
 
     static transfer(details){
-        const statement = `INSERT INTO test_openwallet.test_transfers 
+        const statement = `INSERT INTO  transfers 
                 (id, amount, source_wallet, source_wallet_currency, destination_wallet, destination_wallet_currency, converted_amount) 
                                 VALUES (?,?,?,?,?,?,?)`;
         const values = [
@@ -69,7 +70,7 @@ class Transfer {
     }
 
     static findBySourceWalletID(id){
-        const statement = "SELECT * FROM test_openwallet.test_transfers WHERE source_wallet = ?";
+        const statement = "SELECT * FROM  transfers WHERE source_wallet = ?";
 
         return new Promise((resolve, reject) => {
             db.query(statement, id, (err, results) => {
@@ -86,7 +87,7 @@ class Transfer {
     }
 
     static findByTransferID(transfer_id, wallet_id){
-        const statement = "SELECT * FROM test_openwallet.test_transfers WHERE id = ? AND source_wallet = ?";
+        const statement = "SELECT * FROM  transfers WHERE id = ? AND source_wallet = ?";
 
         const values = [transfer_id, wallet_id];
         return new Promise((resolve, reject) => {

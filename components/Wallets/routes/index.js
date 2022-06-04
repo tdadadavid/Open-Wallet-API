@@ -14,18 +14,10 @@ walletRouter
     .post(validateInputs, walletController.createWallet)
     .get(walletController.getUserWallets);
 
-
-// // <!-- verify the wallet id -->
-// TODO
-// Refactor the getWallet and close wallet
-// controller.
-
 // TODO
 walletRouter
     .route('/api/wallets/:id')
     .get(walletController.getWallet)
     .delete(walletController.closeWallet);
-
-
 
 module.exports = walletRouter;

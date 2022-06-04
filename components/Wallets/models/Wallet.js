@@ -28,7 +28,7 @@ class Wallet {
     }
 
     static save(wallet){
-        const statement = `INSERT INTO test_openwallet.test_wallets (id, currency, amount, user_id)
+        const statement = `INSERT INTO  wallets (id, currency, amount, user_id)
                             VALUES (?, ?, ?, ?)`;
         const values = [wallet.id, wallet.currency, wallet.amount, wallet.user_id];
 
@@ -45,7 +45,7 @@ class Wallet {
     }
 
     static findByOwner(owner){
-        const statement = "SELECT * FROM test_openwallet.test_wallets WHERE user_id = ?";
+        const statement = "SELECT * FROM  wallets WHERE user_id = ?";
 
         return new Promise((resolve, reject) => {
             db.query(statement, owner, (err, results) => {
@@ -62,7 +62,7 @@ class Wallet {
     }
 
     static findByID(id){
-        const statement = `SELECT * FROM test_openwallet.test_wallets WHERE id = ?`;
+        const statement = `SELECT * FROM  wallets WHERE id = ?`;
 
         return new Promise((resolve, reject) => {
             db.query(statement, id, (err, results) => {
@@ -79,7 +79,7 @@ class Wallet {
     }
 
     static deleteByID(id){
-        const statement = "DELETE FROM test_openwallet.test_wallets WHERE id = ?";
+        const statement = "DELETE FROM  wallets WHERE id = ?";
 
         return new Promise((resolve, reject) => {
             db.query(statement, id, (err, result) => {

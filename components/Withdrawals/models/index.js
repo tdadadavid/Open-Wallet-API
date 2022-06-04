@@ -26,7 +26,7 @@ class Withdrawal {
     }
 
     static withdraw(details){
-        const statement = `INSERT INTO test_openwallet.test_withdrawals (id, amount, source_wallet)
+        const statement = `INSERT INTO  withdrawals (id, amount, source_wallet)
                             VALUES (?, ? , ?)`;
 
         const values = [details.id, details.amount, details.wallet_id];
@@ -43,7 +43,7 @@ class Withdrawal {
     }
 
     static getWithdrawalsByWalletID(id){
-        const statement = "SELECT * FROM test_openwallet.test_withdrawals WHERE source_wallet = ?";
+        const statement = "SELECT * FROM  withdrawals WHERE source_wallet = ?";
 
         return new Promise((resolve, reject) => {
             db.query(statement, id, (err, results) => {
@@ -60,7 +60,7 @@ class Withdrawal {
     }
 
     static getWithdrawalByID(id){
-        const statement = "SELECT * FROM test_openwallet.test_withdrawals WHERE id = ?";
+        const statement = "SELECT * FROM  withdrawals WHERE id = ?";
 
         return new Promise((resolve, reject) => {
             db.query(statement, id, (err, results) => {
