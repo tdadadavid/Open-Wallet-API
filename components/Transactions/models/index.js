@@ -11,6 +11,7 @@ class Transaction {
         return {
             source_wallet: this.transaction.userWallet,
             wallet_currency: this.transaction.currency,
+            balance: this.transaction.currentBalance,
             deposits: {
                 id: this.transaction.userWallet,
                 amount: this.transaction.depositAmount,

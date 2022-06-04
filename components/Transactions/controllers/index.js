@@ -8,8 +8,7 @@ const TransactionController = {
 
         try{
             const wallet_transaction = await Transaction.getWalletTransactionByID(wallet.id, user_id);
-            console.log(wallet_transaction.map(transaction => transaction.toJSON()));
-            successResponse(res, 200, "Here you go.", wallet_transaction);
+            successResponse(res, 200, "Here you go.", wallet_transaction.map(transaction => transaction.toJSON()));
         }catch (e) {
             console.log(e);
             errorMessage(res, 500, "Oops! an error occurred.");

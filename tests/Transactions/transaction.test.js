@@ -32,9 +32,11 @@ describe('Transaction module', () => {
     });
 
     it('should return 200 for returning', async () => {
-        const response = await makeGetRequest('cYpYDcZv32lrzq1K');
+        const response = await makeGetRequest('KzoLgfpqmaKvnXAC');
         expect(response.status).toBe(200);
         expect(response.body.message).toEqual("Here you go.");
     });
+
+    //TODO watch how to paginate data
 
 });

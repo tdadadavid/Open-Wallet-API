@@ -27,7 +27,7 @@ class Deposit {
 
     static deposit(details){
 
-        const statement =  `INSERT INTO test_openwallet.test_deposits (id, amount, source_wallet) 
+        const statement =  `INSERT INTO deposits (id, amount, source_wallet) 
                             VALUES (?, ?, ?)`;
         const values = [details.id, details.amount, details.wallet];
 
@@ -44,7 +44,7 @@ class Deposit {
     }
 
     static findDepositsByWalletID(id){
-        const statement = "SELECT * FROM test_openwallet.test_deposits WHERE source_wallet = ?";
+        const statement = "SELECT * FROM  deposits WHERE source_wallet = ?";
 
         return new Promise((resolve, reject) => {
             db.query(statement, id, (err, result) => {
@@ -61,7 +61,7 @@ class Deposit {
     }
 
     static findDepositByID(id){
-        const statement = "SELECT * FROM test_openwallet.test_deposits WHERE id = ?";
+        const statement = "SELECT * FROM deposits WHERE id = ?";
 
         return new Promise((resolve, reject) => {
             db.query(statement, id, (err, result) => {

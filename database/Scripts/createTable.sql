@@ -103,3 +103,41 @@ BEGIN
     SET wallets.amount = wallets.amount - NEW.amount
     WHERE wallets.id = NEW.source_wallet;
 end;
+
+
+# <!-- Stored procedures --->
+
+# <!-- Procedure for retrieving all transactions for a wallet -->
+use test_openWallet;
+
+DROP PROCEDURE if exists get_wallet_transactions;
+
+CREATE PROCEDURE get_wallet_transactions (
+    wallet_to_search VARCHAR(16) ,
+    owner_of_wallet VARCHAR(30)
+)
+BEGIN
+    SELECT
+        wallet.id AS userWallet,
+        wallet.currency AS currency,
+        wallet.amount AS currentBalance,
+        deposit.id AS deposits,
+        deposit.amount AS depositAmount,
+        deposit.created_at AS depositDate,
+        withdrawals.id AS withdrawal,
+        withdrawals.amount AS withdrawalAmount,
+        withdrawals.created_at AS withdrawalsDate,
+        transfers.id AS transfers,
+        (transfers.amount / transfers.converted_amount) AS transferRate,
+        transfers.amount AS transfersAmount,
+        transfers.created_at AS transferDate
+    FROM wallets AS wallet
+     LEFT OUTER JOIN  deposits AS deposit
+          on deposit.source_wallet = wallet.id
+     LEFT OUTER JOIN transfers
+         on transfers.source_wallet = wallet.id
+     LEFT OUTER JOIN withdrawals
+         on withdrawals.source_wallet = wallet.id
+    WHERE wallet.user_id = owner_of_wallet AND
+            wallet.id = wallet_to_search;
+end;

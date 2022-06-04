@@ -3,10 +3,10 @@ const mysql = require('mysql2');
 
 
 const db = mysql.createConnection({
-    host: config.database.test.host,
-    user: config.database.test.user,
-    password: config.database.test.password,
-    database: config.database.test.name,
+    host: config.database.host,
+    user: config.database.user,
+    password: config.database.password,
+    database: config.database.name,
 });
 
 
