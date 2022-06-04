@@ -11,7 +11,7 @@ withdrawalRouter = Router();
 withdrawalRouter.use(verifyToken);
 
 withdrawalRouter
-    .get('/api/wallets/:id/withdrawals/:withdrawal_id', verifyWallet, withdrawalsController.getSpecificDeposit);
+    .get('/api/wallets/:id/withdrawals/:withdrawal_id', verifyWallet, withdrawalsController.getSpecificWithdrawal);
 
 withdrawalRouter
     .route('/api/wallets/:id/withdrawals')

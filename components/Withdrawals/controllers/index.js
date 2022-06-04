@@ -33,7 +33,7 @@ const withdrawalsController = {
 
         try{
             const withdrawals = await Withdrawal.getWithdrawalsByWalletID(wallet.id);
-            if (!withdrawals) return errorMessage(res, 404, "This wallet has no Transaction [withdraw].");
+            if (!withdrawals) return errorMessage(res, 404, "This wallet has no Transaction [withdrawal].");
             return successResponse(res, 200, "Here you go.", withdrawals.map(withdrawal => withdrawal.toJSON()));
         }catch (e) {
             console.log(e);
@@ -41,7 +41,7 @@ const withdrawalsController = {
         }
     },
 
-    getSpecificDeposit: async (req, res) => {
+    getSpecificWithdrawal: async (req, res) => {
         const withdrawal_id = req.params.withdrawal_id;
 
         try{

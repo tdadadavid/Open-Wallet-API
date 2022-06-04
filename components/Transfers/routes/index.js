@@ -17,6 +17,4 @@ transferRouter
     .post(verifyWallet,validateInputs, transferController.makeTransfer)
     .get(verifyWallet, transferController.getAllTransfers);
 
-
-
 module.exports = transferRouter;

@@ -110,7 +110,6 @@ end;
 # <!-- Stored procedures --->
 
 # <!-- Procedure for retrieving all transactions for a wallet -->
-use test_openWallet;
 
 DROP PROCEDURE if exists get_wallet_transactions;
 

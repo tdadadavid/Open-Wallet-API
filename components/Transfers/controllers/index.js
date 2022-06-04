@@ -12,7 +12,6 @@ const TransferController = {
         let destination_wallet_currency = destination_wallet[0].currency;
         let source_wallet_currency = wallet[0].currency;
 
-
         try {
 
             let response = destination_wallet_currency !== source_wallet_currency

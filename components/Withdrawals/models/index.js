@@ -20,6 +20,7 @@ class Withdrawal {
     static transform(array){
         return array.map(result => {
             const withdrawal = new Withdrawal(result.amount, result.source_wallet);
+            withdrawal.id = result.id;
             withdrawal.created_at = result.created_at;
             return withdrawal;
         });
