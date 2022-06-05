@@ -1,4 +1,5 @@
-const Transaction = require('../models')
+const Transaction = require('../models');
+const {generatePDF, prettify} = require('../../../services/pdfMaker');
 const {errorMessage, successResponse} = require("../../../utils/apiResponses");
 
 const TransactionController = {
@@ -13,7 +14,33 @@ const TransactionController = {
             console.log(e);
             errorMessage(res, 500, "Oops! an error occurred.");
         }
+    },
+
+    getWalletTransactionsAsPDF: async (req, res) => {
+        const wallet = req.wallet[0];
+        const user = req.user;
+
+        try{
+
+            const wallet_transactions = await Transaction.getWalletTransactionByID(wallet.id, user.id);
+
+            const stream = res.writeHead(200, {
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': 'attachment;filename=Transactions-history.pdf'
+            });
+
+            generatePDF(JSON.stringify(wallet_transactions[0].toJSON()),
+                (chunk) => stream.write(chunk),
+                () => stream.end()
+            );
+
+        }catch (e) {
+            console.log(e);
+            errorMessage(res, 500, "Oops! an error occurred.");
+        }
+
     }
+    
 }
 
 

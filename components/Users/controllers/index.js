@@ -44,9 +44,6 @@ const UserController = {
         //generate user token
         const access_token = await generateAccessToken(user[0].id);
 
-        //assign refresh token to user
-        user[0].token = await generateRefreshToken(user[0].id);
-
         //assign the access token to the header
         res.header('x-auth-token', access_token);
 
@@ -61,7 +58,6 @@ const UserController = {
             console.log(err)
             errorMessage(res, 500, "Oops! an error occurred.");
         }
-        // TODO, put toJSON
     },
 
 
