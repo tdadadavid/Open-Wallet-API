@@ -1,3 +1,8 @@
+# EVERY ROUGH WORK SHOULD BE DONE HERE
+# THEN TRANSFERRED TO 'createTable'
+
+
+
 # <!-- CREATE DATABASE -->
 CREATE DATABASE if not exists test_openWallet;
 
@@ -96,7 +101,7 @@ ALTER TABLE test_openWallet.test_transfers MODIFY COLUMN `converted_amount`DECIM
 DROP TABLE test_openWallet.test_deposits;
 
 # <!-- Don't copy -->
-DROP TABLE test_wallets;
+DROP TABLE test_openWallet.test_wallets;
 
 # <!-- Create Transactions table don't copy -->
 CREATE TABLE if not exists test_openWallet.test_transactions_logs (
