@@ -23,6 +23,7 @@ const connectToDatabase = async () => {
     }
 }
 
+
 function truncateTable(tableName){
     const statement = `TRUNCATE TABLE test_openwallet.${tableName}`;
     return new Promise((resolve, reject) => {
