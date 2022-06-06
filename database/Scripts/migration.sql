@@ -9,7 +9,7 @@ CREATE TABLE if not exists users (
   `id` VARCHAR(30) NOT NULL UNIQUE PRIMARY KEY,
   `firstname` VARCHAR(30) NOT NULL,
   `lastname` VARCHAR(30) NOT NULL,
-  `email` VARCHAR(320) NOT NULL UNIQUE,
+  `email` VARCHAR(320) NOT NULL UNIQUE, # change it to 100 on production
   `token` VARCHAR(255) NOT NULL UNIQUE,
   `password` VARCHAR(120) NOT NULL
 );
@@ -62,7 +62,10 @@ CREATE TABLE if not exists transfers (
 # <!-- Triggers creation -->
 
 
+
 # <!-- Deposits trigger -->
+DROP TRIGGER if exists deposits_after_insert;
+
 CREATE TRIGGER deposits_after_insert
     AFTER INSERT ON deposits FOR EACH ROW
 
@@ -74,18 +77,23 @@ end;
 
 
 # <!-- Withdrawals trigger -->
+DROP TRIGGER if exists withdraw_after_insert;
+
+DELIMITER  $$
 CREATE TRIGGER withdraw_after_insert
     AFTER INSERT ON withdrawals FOR EACH ROW
 BEGIN
     UPDATE wallets
         SET wallets.amount = wallets.amount - NEW.amount
-        WHERE wallets.id = NEW.source_wallet;
+        WHERE wallets.id = NEW.source_wallet $$
 end;
-
+DELIMITER ;
 
 # <!-- Transfers trigger -->
 
 # <!-- This trigger is for the recipient -->
+DROP TRIGGER if exists transfer_after_insert_add;
+
 CREATE TRIGGER transfer_after_insert_add
     AFTER INSERT ON transfers FOR EACH ROW
 
@@ -97,6 +105,9 @@ BEGIN
 end;
 
 # <!-- This trigger is for the sender -->
+DROP TRIGGER if exists transfer_after_insert_deduct;
+
+DELIMITER $$
 CREATE TRIGGER transfer_after_insert_deduct
     AFTER INSERT ON transfers FOR EACH ROW
 
@@ -104,7 +115,10 @@ BEGIN
     UPDATE wallets
     SET wallets.amount = wallets.amount - NEW.amount
     WHERE wallets.id = NEW.source_wallet;
-end;
+
+end $$
+
+DELIMITER ;
 
 
 # <!-- Stored procedures --->
@@ -141,4 +155,4 @@ BEGIN
          on withdrawals.source_wallet = wallet.id
     WHERE wallet.user_id = owner_of_wallet AND
             wallet.id = wallet_to_search;
-end;
+end
