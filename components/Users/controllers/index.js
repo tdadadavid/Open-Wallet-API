@@ -41,16 +41,16 @@ const UserController = {
         const user = await User.findByEmail(payload.email);
         if(!user) return errorMessage(res, 404, "Email not found");
 
-        //generate user token
-        const access_token = await generateAccessToken(user[0].id);
-
-        //assign the access token to the header
-        res.header('x-auth-token', access_token);
-
         try{
             // check if the passwords are correct
             const successful = await compare(payload.password, user[0].password);
             if (!successful) return errorMessage(res, 400, "Password doesn't match");
+
+            //generate user token
+            const access_token = await generateAccessToken(user[0].id);
+
+            //assign the access token to the header
+            res.header('x-auth-token', access_token);
 
             // log the user in
             successResponse(res, 200, "User logged in", user[0].toJSON());
