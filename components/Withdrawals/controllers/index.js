@@ -7,11 +7,7 @@ const withdrawalsController = {
 
         const current_wallet_balance = req.current_balance;
         const amount_to_be_withdrawn = req.amount;
-
-        const wallet =  req.wallet[0];
-
-        // update the value of the wallet here in javascript while the triggers
-        // in sql will update it at database level, because of fast performance
+        const wallet =  req.wallet;
 
         wallet.amount = current_wallet_balance - amount_to_be_withdrawn;
 
@@ -29,7 +25,7 @@ const withdrawalsController = {
     },
 
     getAllWithdrawals: async (req, res) => {
-        const wallet = req.wallet[0];
+        const wallet = req.wallet;
 
         try{
             const withdrawals = await Withdrawal.getWithdrawalsByWalletID(wallet.id);

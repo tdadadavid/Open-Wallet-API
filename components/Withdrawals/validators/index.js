@@ -14,7 +14,7 @@ const validateInputs = async (req, res, next) => {
         }
 
         // check if the amount to be withdrawn is greater than available amount in wallet
-        const current_balance = parseFloat(req.wallet[0].amount);
+        const current_balance = parseFloat(req.wallet.amount);
         if (value.amount > current_balance)
             return errorMessage(res, 400, "Error! insufficient wallet balance");
 

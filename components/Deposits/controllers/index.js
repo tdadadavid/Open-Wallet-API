@@ -6,7 +6,7 @@ const DepositController = {
     makeDeposit: async (req, res) => {
 
         const { amount } = req.depositAmount;
-        let wallet = req.wallet[0];
+        let wallet = req.wallet;
 
         console.log(wallet);
 
@@ -29,7 +29,7 @@ const DepositController = {
     },
 
     getDeposits: async (req, res) => {
-        const wallet = req.wallet[0];
+        const wallet = req.wallet;
 
         if (wallet.user_id !== req.user.id)
             return  errorMessage(res, 400, "This is a stolen token");

@@ -1,10 +1,10 @@
 const Transaction = require('../models');
-const {generatePDF, prettify} = require('../../../services/pdfMaker');
+const generatePDF = require('../../../services/pdfMaker');
 const {errorMessage, successResponse} = require("../../../utils/apiResponses");
 
 const TransactionController = {
     getWalletTransactions: async (req, res) => {
-        const wallet = req.wallet[0];
+        const wallet = req.wallet;
         const user_id = req.user.id;
 
         try{
@@ -17,7 +17,7 @@ const TransactionController = {
     },
 
     getWalletTransactionsAsPDF: async (req, res) => {
-        const wallet = req.wallet[0];
+        const wallet = req.wallet;
         const user = req.user;
 
         try{
@@ -29,7 +29,7 @@ const TransactionController = {
                 'Content-Disposition': 'attachment;filename=Transactions-history.pdf'
             });
 
-            generatePDF(JSON.stringify(wallet_transactions[0].toJSON()),
+            generatePDF(JSON.stringify(wallet_transactions.map(transaction => transaction.toJSON())),
                 (chunk) => stream.write(chunk),
                 () => stream.end()
             );

@@ -7,10 +7,10 @@ const TransferController = {
     makeTransfer: async (req, res) => {
         let { destination_wallet, wallet, amount } = req;
 
-        wallet[0].amount = parseFloat(wallet[0].amount) - amount;
+        wallet.amount = parseFloat(wallet.amount) - amount;
 
         let destination_wallet_currency = destination_wallet[0].currency;
-        let source_wallet_currency = wallet[0].currency;
+        let source_wallet_currency = wallet.currency;
 
         try {
 
@@ -21,9 +21,9 @@ const TransferController = {
             //TODO check if the currency does not exist
             const convertedAmount = response.result ?? amount
 
-            const transaction = new Transfer(+amount, wallet[0], destination_wallet[0], +convertedAmount);
+            const transaction = new Transfer(+amount, wallet, destination_wallet[0], +convertedAmount);
             await Transfer.transfer(transaction);
-            successResponse(res, 201, "Transaction [transfer] successful", wallet[0].toJSON());
+            successResponse(res, 201, "Transaction [transfer] successful", wallet.toJSON());
         } catch (err) {
             console.log(err);
             errorMessage(res, 500, "Oops! an error occurred.");
@@ -33,7 +33,7 @@ const TransferController = {
     },
 
     getAllTransfers: async (req, res) => {
-        const wallet_id = req.wallet[0].id;
+        const wallet_id = req.wallet.id;
 
         try{
             const allTransfers = await Transfer.findBySourceWalletID(wallet_id);
@@ -47,7 +47,7 @@ const TransferController = {
 
     getSpecificTransfer: async (req, res) => {
         const { transfer_id } = req.params;
-        const wallet_id = req.wallet[0].id;
+        const wallet_id = req.wallet.id;
 
         try{
             const transfer = await Transfer.findByTransferID(transfer_id,  wallet_id);

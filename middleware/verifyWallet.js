@@ -10,7 +10,7 @@ const verifyWallet = async (req, res, next) => {
         const wallet = await Wallet.findByID(id);
         if(!wallet) return errorMessage(res, 400, `Wallet with this id ${id} not found`);
 
-        req.wallet = wallet;
+        req.wallet = wallet[0];
         next();
     }catch (e) {
         console.log(e);

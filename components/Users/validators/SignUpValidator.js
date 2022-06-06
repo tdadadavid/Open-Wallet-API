@@ -1,4 +1,5 @@
 const userRegistrationSchema = require('../validationSchemas/SignUpSchema');
+const {errorMessage} = require("../../../utils/apiResponses");
 
 
 const validateNewUserInputs = async (req, res, next) => {
@@ -7,10 +8,7 @@ const validateNewUserInputs = async (req, res, next) => {
         const { error: err , value } = await userRegistrationSchema.validate(req.body);
         if (err){
             console.log(err);
-            res.status(400).json({
-                status: 400,
-                message: err.message
-            });
+            errorMessage(res, 400, err.message);
             return;
         }
 
@@ -19,10 +17,7 @@ const validateNewUserInputs = async (req, res, next) => {
         next();
     }catch (e) {
         console.log(e);
-        res.status(500).json({
-            status: 500,
-            message: "Oops! an error occurred."
-        });
+        errorMessage(res, 500, "Oops! an error occurred.");
     }
 }
 

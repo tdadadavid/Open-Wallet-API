@@ -22,7 +22,7 @@ const validateInputs = async (req, res, next) => {
         if (!destination_wallet) return errorMessage(res, 404, "Destination wallet does not exists.");
 
         // TODO put this into an helper function called 'balanceIsInsufficient'
-        const wallet_balance = parseFloat(req.wallet[0].amount);
+        const wallet_balance = parseFloat(req.wallet.amount);
         if (wallet_balance < amount){
             return errorMessage(res, 400, "Insufficient wallet balance");
         }

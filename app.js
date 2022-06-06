@@ -1,11 +1,16 @@
 const router = require('./components');
+const helmet = require('helmet');
+const cors  = require('cors');
 
 const express =  require('express');
+const {errorMessage} = require("./utils/apiResponses");
 const app = express();
 
 
 // to accept json payload
 app.use(express.json());
+app.use(helmet());
+app.use(cors());
 
 
 // entry point for all routes
@@ -17,10 +22,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    res.status(500).json({
-        status: 500,
-        message: err.toString()
-    });
+    errorMessage(res, 500, err.toString());
 })
 
 
